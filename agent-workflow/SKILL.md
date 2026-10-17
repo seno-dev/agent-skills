@@ -16,8 +16,9 @@ description: 日本語の返答文体、git・ブランチ・デプロイ、テ�
 | 単体テスト、e2e、ブラウザ確認、verify スキル | `testing.md` |
 | 画面文言、情報の順、共通ラッパー、利用者向け表現 | `ui.md` |
 | TypeScript/React の型・optional・共通化・lint・migration コメント等 | `implementation.md` |
+| pstack（`/poteto-mode` など）を使うか、どこまで使うか、役割ごとのモデル | `pstack.md` |
 
-**コード実装・修正・PR を含む作業**では、少なくとも `dev-workflow.md` と `implementation.md` を Read する。利用者向けの説明やチャット返信を書くときは `general.md` も Read する。画面を触るときは `ui.md` を追加。テストを書く・検証方針を決めるときは `testing.md` を追加。
+**コード実装・修正・PR を含む作業**では、少なくとも `dev-workflow.md` と `implementation.md` を Read する。利用者向けの説明やチャット返信を書くときは `general.md` も Read する。画面を触るときは `ui.md` を追加。テストを書く・検証方針を決めるときは `testing.md` を追加。クラウドエージェントに作業を出すときは `pstack.md` も Read する。
 
 ## プロジェクト固有
 
