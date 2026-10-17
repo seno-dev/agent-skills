@@ -39,6 +39,10 @@ architect runners: grok-4.7-medium
 interrogate reviewers: grok-4.7-medium
 ```
 
+## 読み込み方
+
+クラウドエージェントでは、pstack のスキルファイルは `~/.cursor/plugins/cache/` 配下にあるが、一覧に出るのは `setup-pstack` だけで、`poteto-mode` などは出ない（`disable-model-invocation: true` のため）。使うときは `ls ~/.cursor/plugins/cache/*/*/*/skills/poteto-mode/SKILL.md` でパスを探して Read し、必要なスキルも同じ `skills/` 配下から Read する。
+
 ## 初回の確認
 
 クラウドエージェントで pstack を初めて使うときは、作業者に pstack のスキル（`poteto-mode`）が読めるか最初に報告させる。読めなければ pstack なしで進め、その旨を報告させる。
