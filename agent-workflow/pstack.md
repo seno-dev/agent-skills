@@ -14,6 +14,12 @@ pstack は作業者（クラウドエージェント、Cursor Project の worker
 - `reflect`、`correct`、`automate-me`、`setup-pstack` は頼まれたときだけ。
 - 迷ったら軽い方にする。重くしたいときは理由を書いて確認する。
 
+## モデルを上げる場所と下げる場所
+
+- 規模に関係なく、間違えたときの損が大きい領域（決済、認証、migration、医療データの書き込みなど。具体的な一覧は各プロジェクトの preferences や bot の説明に書く）は、作業者を grok-4.7-medium 以上にし、develop へ merge する前に必ず `interrogate` を 1 体通す。上の表で中規模が `interrogate` を使わないことより、こちらを優先する。
+- 読むだけの調査、文言やドキュメントの変更、スキルリポジトリへの push は composer-2.5 にする。
+- 同じモデルで検証に 2 回落ちたら、同じモデルで再挑戦せず、1 段上のモデル（composer-2.5 → grok-4.7-medium → grok-4.7-high）で新しい作業者を出す。grok-4.7-high より上げるときは確認する。
+
 ## 役割ごとのモデル
 
 `/setup-pstack` の規則ファイルは PC の `~/.cursor/rules` にしかなく、クラウドエージェントには届かない。クラウドではこの表を正とし、指示文に貼る。パネル系は 1 体まで。fast モード、xhigh、opus は事前確認なしに使わない。
@@ -35,8 +41,8 @@ reflect judgment, divergent, synthesizer: inherit-parent
 arena runners: composer-2.5
 arena cross-judge pool: grok-4.7-medium
 swarm workers: composer-2.5
-architect runners: grok-4.7-medium
-interrogate reviewers: grok-4.7-medium
+architect runners: grok-4.7-high
+interrogate reviewers: grok-4.7-high
 ```
 
 ## 読み込み方
