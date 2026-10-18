@@ -19,6 +19,7 @@ pstack は作業者（クラウドエージェント、Cursor Project の worker
 - 規模に関係なく、間違えたときの損が大きい領域（決済、認証、migration、医療データの書き込みなど。具体的な一覧は各プロジェクトの preferences や bot の説明に書く）は、作業者を grok-4.7-medium 以上にし、develop へ merge する前に必ず `interrogate` を 1 体通す。上の表で中規模が `interrogate` を使わないことより、こちらを優先する。
 - 読むだけの調査、文言やドキュメントの変更、スキルリポジトリへの push は composer-2.5 にする。
 - 同じモデルで検証に 2 回落ちたら、同じモデルで再挑戦せず、1 段上のモデル（composer-2.5 → grok-4.7-medium → grok-4.7-high）で新しい作業者を出す。grok-4.7-high より上げるときは確認する。
+- 中規模以上では、表で `inherit-parent` になっている役（judgment and prose、how explainer、why synthesizer、reflect judgment, divergent, synthesizer）を grok-4.7-medium にする。クラウドでは親が作業者の composer-2.5 になり、判断役まで同じモデルになるため。
 
 ## 役割ごとのモデル
 
