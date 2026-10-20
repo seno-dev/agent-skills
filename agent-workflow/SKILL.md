@@ -1,28 +1,10 @@
 ---
 name: agent-workflow
-description: git・ブランチ・デプロイ、テスト、UI、TypeScript/React 実装の手順。コード変更、PR、レビュー、画面実装、検証を行うときに使う。
+description: git・ブランチ・デプロイ、テスト、UI、TypeScript/React 実装、pstack とモデル選定の手順。コード変更、レビュー、画面実装、検証、デプロイを行うときに使う。
 ---
 
 # agent-workflow
 
-このスキルは **同ディレクトリ内の Markdown を Read してから** 作業する。子ファイルは自動では読み込まれない。
+このスキルを使うときは、作業の種類に関係なく、同じディレクトリの `dev-workflow.md`、`implementation.md`、`pstack.md` の3つを Read してから作業する。子ファイルは自動では読み込まれない。
 
-## ルーティング
-
-| 依頼の種類 | Read するファイル |
-|------------|-------------------|
-| ブランチ、コミット、push、デプロイ、worker、本番/開発の区別 | `dev-workflow.md` |
-| 単体テスト、e2e、ブラウザ確認、verify スキル | `testing.md` |
-| 画面文言、情報の順、共通ラッパー、利用者向け表現、TypeScript/React の型・optional・共通化・lint・migration コメント等 | `implementation.md` |
-| モデル選定、pstack（`/poteto-mode` など）を使うか、どこまで使うか、役割ごとのモデル | `pstack.md` |
-
-**コード実装・修正・PR を含む作業**では、少なくとも `dev-workflow.md` と `implementation.md` を Read する。テストを書く・検証方針を決めるときは `testing.md` を追加。クラウドエージェントに作業を出すときは `pstack.md` も Read する。
-
-## プロジェクト固有
-
-- リポジトリの `.cursor/skills/`（例: `verify-screen`）と Project の `preferences.md` があれば、**そちらをグローバルより優先**する。
-- ブランチ名（`main` / `develop`）、ホスト名、デプロイ手順の具体はリポジトリまたは Project 設定に書かれている想定。グローバル `dev-workflow.md` の一般原則と矛盾したら **プロジェクト側を優先**する。
-
-## User Rules との関係
-
-User Rules に短い索引（「コード作業時は `agent-workflow` の SKILL.md に従い、必要な md を Read」）だけ残し、詳細はこのディレクトリに集約する設計向け。
+- リポジトリの `.cursor/rules`、`.cursor/skills`（例: `verify-screen`）、Project の `preferences.md` があれば、そちらをグローバルより優先する。ブランチ名、ホスト名、デプロイ手順の具体はそちらにある想定で、このディレクトリの一般原則と矛盾したらプロジェクト側を優先する。
