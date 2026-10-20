@@ -23,7 +23,7 @@ pstack のスキル（`poteto-mode` など）は、Cursor Project、Project の 
   - 間違えたときの損が大きい領域（決済、認証、migration、医療データの書き込みなど。具体的な一覧は各リポジトリの `.cursor/rules`）
 - 読むだけの調査、文言やドキュメントの変更、スキルリポジトリへの push は composer-2.5 にする。
 - 同じモデルで検証に 2 回落ちたら、同じモデルで再挑戦せず、1 段上のモデル（composer-2.5 → grok-4.7-medium → grok-4.7-high）で新しい worker かサブエージェントを出す。grok-4.7-high より上げるときは確認する。
-- パネル系は 1 体まで。fast モード、xhigh、opus は事前確認なしに使わない。
+- パネル系は 1 体まで。fast モードと xhigh は事前確認なしに使わない。opus は下の表のパネルの役でだけ使う。
 
 ### サブエージェントの役ごとのモデル
 クラウドエージェントがサブエージェントを出すときも、worker がサブエージェントを出すときも、この表に従う。`/setup-pstack` の規則ファイルは PC の `~/.cursor/rules` にしかなくクラウドには届かないので、クラウドではこの表を正とする。
@@ -33,20 +33,23 @@ feature, refactoring: grok-4.7-medium
 bug-fix: grok-4.7-medium
 perf-issue: grok-4.7-medium
 hillclimb: grok-4.7-medium
-judgment and prose: grok-4.7-medium
+judgment and prose: grok-4.7-high
 hardest tasks: grok-4.7-high
-how explorer: composer-2.5
+how explorer: grok-4.7-medium
 how explainer: grok-4.7-medium
-why investigators: composer-2.5
-why synthesizer: grok-4.7-medium
+why investigators: grok-4.7-medium
+why synthesizer: grok-4.7-high
 reflect tooling: composer-2.5
-reflect judgment, divergent, synthesizer: grok-4.7-medium
-arena runners: composer-2.5
-arena cross-judge pool: grok-4.7-medium
-swarm workers: composer-2.5
-architect runners: grok-4.7-high
-interrogate reviewers: grok-4.7-high
+reflect judgment, divergent, synthesizer: grok-4.7-high
+arena runners: grok-4.7-high, claude-opus-5-5-medium
+arena cross-judge pool: grok-4.7-high
+swarm workers: grok-4.7-medium
+architect runners: grok-4.7-high, claude-opus-5-5-medium
+interrogate reviewers: grok-4.7-high, claude-opus-5-5-medium
 ```
+
+- パネル系（architect、interrogate、arena）では、出す側（Grok Bot、Project、クラウドエージェント、worker）が、各モデルに出す前に自分の完全な案を書いて固めておく。返ってきた案はその案と並べて、全案が一致する点と割れている点に分けて統合する。判断・文章・まとめの役は、Grok Bot が担える場面では Grok Bot 自身がやる。
+- 間違えたときの損が大きい領域では、パネルの claude-opus-5-5-medium を claude-opus-5-5-high に上げる。
 
 ## 読み込み方
 
