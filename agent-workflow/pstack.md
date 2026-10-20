@@ -13,7 +13,7 @@ pstack のスキル（`poteto-mode` など）は、Cursor Project、Project の 
 - 間違えたときの損が大きい領域では、規模に関係なく develop へ merge する前に `interrogate` を 1 体通す。
 - 検証はリポジトリの `verify-*` スキル（例: `verify-screen`）と録画を優先する。
 - `reflect`、`correct`、`automate-me`、`setup-pstack` は頼まれたときだけ。
-- 迷ったら軽い方にする。重くしたいときは理由を書いて確認する。
+- 迷ったら軽い方にする。
 
 ## モデル
 
@@ -51,7 +51,3 @@ interrogate reviewers: grok-4.7-high
 ## 読み込み方
 
 クラウドエージェントでは、pstack のスキルファイルは `~/.cursor/plugins/cache/` 配下にあるが、一覧に出るのは `setup-pstack` だけで、`poteto-mode` などは出ない（`disable-model-invocation: true` のため）。使うときは `ls ~/.cursor/plugins/cache/*/*/*/skills/poteto-mode/SKILL.md` でパスを探して Read し、必要なスキルも同じ `skills/` 配下から Read する。
-
-## 初回の確認
-
-クラウドエージェントか Project の worker で pstack を初めて使うときは、最初に pstack のスキル（`poteto-mode`）が読めるかを報告させる。読めなければ pstack なしで進め、そのことを報告させる。
