@@ -10,19 +10,17 @@ pstack のスキル（`poteto-mode` など）は、Cursor Project、Project の 
 | 中 | `/poteto-mode`（作業の型と検証の型に従う） | `arena`、`swarm`、`interrogate` |
 | 大（Project） | `/poteto-mode`。develop へ merge する前に `interrogate` を 1 体だけ | `arena`、`swarm` は seno が指定したときだけ |
 
-- 間違えたときの損が大きい領域（決済、認証、migration、医療データの書き込みなど。具体的な一覧は各リポジトリの `.cursor/rules`）では、規模に関係なく worker と、実装・判断・レビューの役のサブエージェントを grok-4.7-high にし（調べ役は表のまま）、develop へ merge する前に `interrogate` を 1 体通す。
+- 間違えたときの損が大きい領域では、規模に関係なく develop へ merge する前に `interrogate` を 1 体通す。
 - 検証はリポジトリの `verify-*` スキル（例: `verify-screen`）と録画を優先する。
 - `reflect`、`correct`、`automate-me`、`setup-pstack` は頼まれたときだけ。
 - 迷ったら軽い方にする。重くしたいときは理由を書いて確認する。
 
 ## モデル
 
-### 起動時に決まるモデル
-- Grok Bot が起動するクラウドエージェントと Cursor Project は、Cursor の既定モデル（grok-4.7-medium）で動く。bot の指示文ではモデルを変えられない。変えたいときは seno が bot にモデルを指定する。
-- Project が worker を出すときは grok-4.7-medium を既定にする。いちばん難しい作業（複数の境界をまたぐ設計、並行動作、誤りが目立たないアルゴリズム）は grok-4.7-high にする。
-
 ### 上げる場所と下げる場所
-Project が worker を出すときと、クラウドエージェントや worker がサブエージェントを出すときに使う。bot が起動するクラウドエージェントには効かない。
+- Project が worker を出すときと、クラウドエージェントや worker がサブエージェントを出すときは、grok-4.7-medium を既定とする（サブエージェントは、表にある役なら表に従う）。次の2つでは、worker と、実装・判断・レビューの役のサブエージェントを grok-4.7-high にする（調べ役は表のまま）。
+  - いちばん難しい作業（複数の境界をまたぐ設計、並行動作、誤りが目立たないアルゴリズム）
+  - 間違えたときの損が大きい領域（決済、認証、migration、医療データの書き込みなど。具体的な一覧は各リポジトリの `.cursor/rules`）
 - 読むだけの調査、文言やドキュメントの変更、スキルリポジトリへの push は composer-2.5 にする。
 - 同じモデルで検証に 2 回落ちたら、同じモデルで再挑戦せず、1 段上のモデル（composer-2.5 → grok-4.7-medium → grok-4.7-high）で新しい worker かサブエージェントを出す。grok-4.7-high より上げるときは確認する。
 - パネル系は 1 体まで。fast モード、xhigh、opus は事前確認なしに使わない。
