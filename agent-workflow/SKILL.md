@@ -11,11 +11,11 @@ description: git・ブランチ・デプロイ、テスト、UI、TypeScript/Rea
 
 | 依頼の種類 | Read するファイル |
 |------------|-------------------|
-| ブランチ、コミット、push、デプロイ、worker、モデル選定、migration、本番/開発の区別 | `dev-workflow.md` |
+| ブランチ、コミット、push、デプロイ、worker、本番/開発の区別 | `dev-workflow.md` |
 | 単体テスト、e2e、ブラウザ確認、verify スキル | `testing.md` |
 | 画面文言、情報の順、共通ラッパー、利用者向け表現 | `ui.md` |
 | TypeScript/React の型・optional・共通化・lint・migration コメント等 | `implementation.md` |
-| pstack（`/poteto-mode` など）を使うか、どこまで使うか、役割ごとのモデル | `pstack.md` |
+| モデル選定、pstack（`/poteto-mode` など）を使うか、どこまで使うか、役割ごとのモデル | `pstack.md` |
 
 **コード実装・修正・PR を含む作業**では、少なくとも `dev-workflow.md` と `implementation.md` を Read する。画面を触るときは `ui.md` を追加。テストを書く・検証方針を決めるときは `testing.md` を追加。クラウドエージェントに作業を出すときは `pstack.md` も Read する。
 
