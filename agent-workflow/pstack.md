@@ -2,15 +2,15 @@
 
 pstack のスキル（`poteto-mode` など）は、Cursor Project、Project の worker、クラウドエージェント、それらが出すサブエージェントのどれでも、以下の内容に従って使う。モデルはこのファイルの「モデル」に従い、pstack の既定より優先する。
 
-## 規模ごとの使い方
+## カテゴリごとの使い方
 
-| 規模 | 使う | 使わない |
+| カテゴリ | 条件 | 使い方 |
 |------|------|----------|
-| 小 | 使わない。必要なら `typescript-best-practices` など、サブエージェントを出さないスキルだけ読む | `/poteto-mode` とすべてのパネル系 |
-| 中 | `/poteto-mode`（作業の型と検証の型に従う） | `arena`、`swarm`、`interrogate` |
-| 大（Project） | `/poteto-mode`。develop へ merge する前に `interrogate` を 1 体だけ | `arena`、`swarm` は seno が指定したときだけ |
+| A | 大規模、または間違えたときの損が大きい領域 | `/poteto-mode` の作業・検証の型に従う。develop へ merge する前に `interrogate` を 1 回行う |
+| B | 中規模 | `/poteto-mode` の作業・検証の型に従う |
+| C | 小規模 | `/poteto-mode` とすべてのパネル系は使わない。必要なら `typescript-best-practices` など、サブエージェントを出さないスキルだけ読む |
 
-- 間違えたときの損が大きい領域では、規模に関係なく develop へ merge する前に `interrogate` を 1 体通す。
+- A のうち、互いに別のファイルや経路を触る作業が 3 つ以上に分けられるときだけ Cursor Project を立ち上げて任せる。それ以外は 1 つのクラウドエージェントが機能ブランチで、検証できる区切りごとにコミットして進める。迷ったら後者にする。
 - 検証はリポジトリの `verify-*` スキル（例: `verify-screen`）と録画を優先する。
 - `reflect`、`correct`、`automate-me`、`setup-pstack` は頼まれたときだけ。
 
