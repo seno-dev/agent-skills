@@ -5,7 +5,7 @@ description: git・ブランチ・デプロイ、テスト、UI、TypeScript/Rea
 
 # agent-workflow
 
-- リポジトリの `.cursor/rules`、`.cursor/skills`（例: `verify-screen`）、Project の `preferences.md` があれば、そちらをこのスキルより優先する。ブランチ名、ホスト名、デプロイ手順の具体はそちらにある想定で、この一般原則と矛盾したらプロジェクト側を優先する。
+- リポジトリの `.cursor/rules`、`.cursor/skills`（例: `verify-screen`）、Project の `preferences.md` があれば、そちらをこのスキルより優先する。ブランチ名、ホスト名、デプロイ手順の具体はそちらにある想定。
 - 調整役（Grok Bot。Cursor のチャットで直接作業しているときはそのチャット）は、カテゴリの判断、受け入れ条件つきの指示文、notes の管理を行い、完了を伝える前に結果を自分で確かめる（コミットと、残っていれば録画を見る）。ファイルを 2〜3 個より多く読むこと、コードを書くこと、実行することは、クラウドエージェント、worker、サブエージェントのいずれかに出す。
 - seno に確認や操作を頼むときは、毎回、開く画面、押すメニュー、見る項目まで書く。項目が特定できないときは、特定できないと書いてから、分かっている範囲の手順を書く。
 - 事実と推定を分けて短く書く。
@@ -20,7 +20,7 @@ description: git・ブランチ・デプロイ、テスト、UI、TypeScript/Rea
 - A のうち、互いに別のファイルや経路を触る作業が 3 つ以上に分けられるときだけ Cursor Project を立ち上げて任せる。それ以外は 1 つのクラウドエージェントが機能ブランチで、検証できる区切りごとにコミットして進める。迷ったら後者にする。
 
 ## ブランチ
-- main は本番デプロイブランチ。開発中の仕様の確認に使わない。進めるときは develop を --ff-only で merge する。
+- main は本番デプロイブランチ。進めるときは develop を --ff-only で merge する。
 - カテゴリ A は develop から機能ブランチを切って実装する。カテゴリ B と C は develop に直接コミットする。develop がないリポジトリでは main から機能ブランチを切る。
 - 機能ブランチは develop に通常の merge で取り込む（squash や rebase はしない）。PR は作らない。
 - develop と機能ブランチへの push、開発環境へのデプロイは確認なしでよい。
@@ -65,14 +65,13 @@ description: git・ブランチ・デプロイ、テスト、UI、TypeScript/Rea
 
 ## pstack の使い方
 
-pstack のスキル（`poteto-mode` など）は、Cursor Project、Project の worker、クラウドエージェント、それらが出すサブエージェントのどれでも、以下の内容に従って使う。カテゴリ（A・B・C）と「間違えたときの損が大きい領域」は上の「カテゴリ」の定義に従う。
+pstack のスキル（`poteto-mode` など）は、Cursor Project、Project の worker、クラウドエージェント、それらが出すサブエージェントのどれでも、以下の内容に従って使う。
 
 ### カテゴリごとの使い方
 
 - A: `/poteto-mode` の作業・検証の型に従う。機能ブランチを取り込む前に `interrogate` を 1 回行う。
 - B: `/poteto-mode` の作業・検証の型に従う。
 - C: `/poteto-mode` とすべてのパネル系は使わない。必要なら `typescript-best-practices` など、サブエージェントを出さないスキルだけ読む。
-- `reflect`、`correct`、`automate-me`、`setup-pstack` は頼まれたときだけ。
 
 ### モデル
 
