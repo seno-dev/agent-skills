@@ -80,7 +80,6 @@ pstack のスキル（`poteto-mode` など）は、Cursor Project、Project の 
 - worker やサブエージェントを出すときは、以下の表にある役ならそれに従い、なければ grok-4.7-medium を使う。pstack の既定や `/setup-pstack` の規則ファイルより優先する。
 - 文言やドキュメントの変更・push など手順が決まったタスクは composer-2.5 にする。
 - 複数のサブエージェントを並行して動かすパネル系（architect、interrogate、arena、swarm）を使う見込みの場合は、作業を始める前に調整役がまとめて seno に確認する（どのパネルを、どこで使うか）。作業の途中で必要になったときは、止めて確認する。
-- fast モードと xhigh は事前確認なしに使わない。opus は下の表のパネルの役でだけ使い、間違えたときの損が大きい領域では claude-opus-5-5-medium を claude-opus-5-5-high に上げる。
 
 ```
 feature, refactoring: grok-4.7-medium
