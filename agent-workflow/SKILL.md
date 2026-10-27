@@ -8,7 +8,7 @@ description: git・ブランチ・デプロイ、テスト、UI、TypeScript/Rea
 - タスク立ち上げ時は該当する Cursor Project があるか確認し、あれば使う。なくても、その対象が今後長く続きコンテキスト保持が必要と考えられれば、作業を出さず、Project の作成を seno に提案する。
 - リポジトリの `.cursor/rules`、`.cursor/skills`（例: `verify-screen`）、Project の `preferences.md` があれば、そちらをこのスキルより優先する。ブランチ名、ホスト名、デプロイ手順の具体はそちらにある想定。
 - Grok Bot は、規模の判断、受け入れ条件つきの指示文、notes の管理を行い、完了を伝える前に結果を自分で確かめる（コミットと、残っていれば録画を見る）。ファイルを 2〜3 個より多く読むこと、コードを書くこと、実行することは、クラウドエージェント、worker、サブエージェントのいずれかに出す。
-- クラウドエージェントには、作業の前に https://raw.githubusercontent.com/seno-dev/agent-skills/main/agent-workflow/SKILL.md を読み、読めなければ止めて報告するよう指示文に書く（Project では子エージェントにも同じ指示を渡すよう Project に伝える）。
+- クラウドエージェントには、作業の前に https://raw.githubusercontent.com/seno-dev/agent-skills/main/agent-workflow/SKILL.md を読み、読めなければ止めて報告するよう指示文に書く。`feature-review` を使うときは https://raw.githubusercontent.com/seno-dev/agent-skills/main/feature-review/SKILL.md も同じように読ませる（Project では子エージェントにも同じ指示を渡すよう Project に伝える）。
 - seno に確認や操作を頼むときは、毎回、開く画面、押すメニュー、見る項目まで書く。項目が特定できないときは、特定できないと書いてから、分かっている範囲の手順を書く。
 - 事実と推定を分けて短く書く。
 - 完了を伝えるとき、やらなかったものがあれば項目ごとに理由を添える。
@@ -22,7 +22,7 @@ description: git・ブランチ・デプロイ、テスト、UI、TypeScript/Rea
 
 ## ブランチ
 - main は本番デプロイブランチ。進めるときは develop を --ff-only で merge する。
-- 大規模と、高リスク領域（決済、認証、migration、医療データの書き込みなど。一覧は各リポジトリの `.cursor/rules`）の変更は、develop から機能ブランチを切って実装する。中規模と小規模は develop に直接コミットする。develop がないリポジトリでは main から機能ブランチを切る。
+- 大規模と、高リスク領域（決済、認証、migration、医療データ書き込み、データ書き換え（一括更新、webhook、バッチ）、外部サービス連携の仕様変更など。一覧は各リポジトリの `.cursor/rules`）の変更は、develop から機能ブランチを切って実装する。中規模と小規模は develop に直接コミットする。develop がないリポジトリでは main から機能ブランチを切る。
 - 機能ブランチは develop に通常の merge で取り込む（squash や rebase はしない）。PR は作らない。
 - develop と機能ブランチへの push、開発環境へのデプロイは確認なしでよい。
 - 指定された作業ブランチの未 push のコミットと未コミットの変更は、seno が明示したとき以外捨てない。origin に揃えるための git reset、git checkout、クリーンはしない。ブランチ名が指定と違うときは、合わせにいかず止めて報告する。同じ作業コピー上で他の作業が足したコミットは、ブランチの先端から外さない。
@@ -67,7 +67,9 @@ pstack のスキル（`poteto-mode` など）は、Cursor Project、Project の 
 
 - 大・中規模: `/poteto-mode` の作業・検証の型に従う。
 - 小規模: `/poteto-mode` は使わない。必要なら `typescript-best-practices` など、サブエージェントを出さないスキルだけ読む。
-- 大規模と高リスク領域では、機能ブランチを取り込む前に `interrogate` を 1 回行う。
+- 大規模と高リスク領域の機能は、develop に入れる前に `feature-review` を回し、直したあとに `thermos` を回す。
+- 高リスク領域の変更は、develop に入れる前に毎回 `thermos` を回す。
+- 設計判断を含む変更は、develop に入れる前に `interrogate` を 1 回行う。
 
 ### モデル
 
