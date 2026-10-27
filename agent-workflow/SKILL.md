@@ -38,12 +38,12 @@ description: git・ブランチ・デプロイ、テスト、UI、TypeScript/Rea
 ### 大規模
 - develop から機能ブランチを切って実装する。
 - `/poteto-mode` の作業・検証の型に従う。
-- develop に入れる前に `feature-review` を回し、直したあとに `thermos` を回す。
+- develop に入れる前に Grok Bot 自身が `feature-review` を行い、直したあとに `thermos` を回す。
 
 ### 追加: 高リスク領域
 高リスク領域は、決済、認証、migration、医療データ書き込み、データ書き換え（一括更新、webhook、バッチ）、外部サービス連携の仕様変更など。一覧は各リポジトリの `.cursor/rules`。
 - 規模にかかわらず、develop から機能ブランチを切って実装する。
-- develop に入れる前に `feature-review` を回し、直したあとに `thermos` を回す。
+- develop に入れる前に Grok Bot 自身が `feature-review` を行い、直したあとに `thermos` を回す。
 
 ### 追加: 設計判断を含む変更
 - develop に入れる前に `interrogate` を 1 回行う。
