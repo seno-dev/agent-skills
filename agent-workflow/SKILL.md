@@ -39,8 +39,6 @@ description: git・ブランチ・デプロイ、テスト、UI、TypeScript/Rea
 - `as` は、型エラーが出るまで書かない。エラーが出た箇所だけ残してよい。
 - テスト名に関数名を使うときは、文字列ではなく `.name` を使う。
 - アプリ内で定義した値、関数、型を、アプリ内の別箇所から再exportしない。
-- import の整理は作業の最後に lint fix でまとめて行い、作業中はしない。
-- js/tsの実装後は、型チェックとlint fixを実行。
 - console.logやコメントアウトは勝手に消さない
 - 変更によってmigrationファイルに型エラーが発生しても、過去のmigrationは修正せず `// @ts-expect-error old` の追加のみする。
 - migration未実行を前提としたfallbackは不要。
