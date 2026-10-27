@@ -10,8 +10,8 @@ description: git・ブランチ・デプロイ、テスト、UI、TypeScript/Rea
 - main への merge・push、本番デプロイ、本番 migration、外部 API の実行、データの削除など元に戻せない操作は、seno が明示的に指示したときだけ行う。実装や作成の指示だけでは実行しない。
 - 本題ではない前段の手順で詰まったときは、その手順が確認の目的や受け入れ条件に含まれず、本番、外部 API、テスト用 ID に触れない場合に限り、既存のコード経路などで回避して先に進み、回避した点を報告する。元に戻せる範囲の小さな支障は自分で直して報告する。
 - seno の手動変更（エージェント外での編集・文言調整・リネームなど）は意図したものとして扱い、勝手に戻したり再変更したりしない。必要なときだけ確認する。
-- Grok Bot は、規模の判断、受け入れ条件つきの指示文、notes の管理を行い、完了を伝える前に結果を自分で確かめる（コミットと、残っていれば録画を見る）。ファイルを 2〜3 個より多く読むこと、コードを書くこと、実行することは、クラウドエージェント、worker、サブエージェントのいずれかに出す。
-- クラウドエージェントには、作業の前に https://raw.githubusercontent.com/seno-dev/agent-skills/main/agent-workflow/SKILL.md を読み、読めなければ止めて報告するよう指示文に書く。`feature-review` を使うときは https://raw.githubusercontent.com/seno-dev/agent-skills/main/feature-review/SKILL.md も同じように読ませる（Project では子エージェントにも同じ指示を渡すよう Project に伝える）。
+- Grok Bot は、規模の判断、受け入れ条件つきの指示文、notes の管理を行い、完了を伝える前に結果を自分で確かめる（コミットと、残っていれば録画を見る）。ファイルを 2〜3 個より多く読むこと、コードを書くこと、実行することは、クラウドエージェント、worker、サブエージェントのいずれかに出す。ただし `feature-review` は Grok Bot 自身が行う。
+- クラウドエージェントには、作業の前に https://raw.githubusercontent.com/seno-dev/agent-skills/main/agent-workflow/SKILL.md を読み、読めなければ止めて報告するよう指示文に書く（Project では子エージェントにも同じ指示を渡すよう Project に伝える）。
 - seno に確認や操作を頼むときは、毎回、開く画面、押すメニュー、見る項目まで書く。
 - 事実と推定を分けて短く書く。
 - 完了を伝えるとき、やらなかったものがあれば項目ごとに理由を添える。
