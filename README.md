@@ -25,7 +25,7 @@ ls -l ~/.cursor/skills/agent-workflow
 ls ~/.cursor/skills/agent-workflow/
 ```
 
-HTTPS で clone する場合は、1 の URL を `https://github.com/seno-dev/agent-skills.git` に置き換えてください（private のため、GitHub の認証が必要です）。
+HTTPS で clone する場合は、1 の URL を `https://github.com/seno-dev/agent-skills.git` に置き換えてください。
 
 ## 更新の流れ
 
