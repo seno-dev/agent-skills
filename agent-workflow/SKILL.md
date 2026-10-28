@@ -59,7 +59,7 @@ description: git・ブランチ・デプロイ、テスト、UI、TypeScript/Rea
 
 pstack のスキル（`poteto-mode` など）は、Cursor Project、Project の worker、クラウドエージェント、それらが出すサブエージェントのどれでも、以下の内容に従って使う。
 
-- TypeScript（`.ts`、`.tsx`）を読む・書く作業では、`poteto-mode` を使うかどうかに関係なく `typescript-best-practices` を必ず読む。
+- TypeScript（`.ts`、`.tsx`）を書く作業では、`poteto-mode` を使うかどうかに関係なく `typescript-best-practices` を必ず読む。
 
 ### モデル
 
