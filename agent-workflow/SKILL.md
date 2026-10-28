@@ -29,7 +29,7 @@ description: git・ブランチ・デプロイ、テスト、UI、TypeScript/Rea
 
 ### 小規模
 - develop に直接コミットする。
-- `/poteto-mode` は使わない。必要なら `typescript-best-practices` など、サブエージェントを出さないスキルだけ読む。
+- `/poteto-mode` は使わない。
 
 ### 中規模
 - develop に直接コミットする。
@@ -58,6 +58,8 @@ description: git・ブランチ・デプロイ、テスト、UI、TypeScript/Rea
 ## pstack の使い方
 
 pstack のスキル（`poteto-mode` など）は、Cursor Project、Project の worker、クラウドエージェント、それらが出すサブエージェントのどれでも、以下の内容に従って使う。
+
+- TypeScript（`.ts`、`.tsx`）を読む・書く作業では、`poteto-mode` を使うかどうかに関係なく `typescript-best-practices` を必ず読む。
 
 ### モデル
 
