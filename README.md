@@ -1,6 +1,6 @@
 # agent-skills
 
-Cursor のエージェント用のグローバルスキルを置くリポジトリです。今は `agent-workflow/` だけがあります（文体、git・ブランチ・デプロイ、テスト、UI、実装のルール）。プロジェクト固有の設定（各 Project の `preferences.md` など）と、Secrets の値はこのリポジトリに置かない。
+Cursor のエージェント用のグローバルスキルを置くリポジトリです。今は次の 3 つがあります。`agent-workflow/`（文体、git・ブランチ・デプロイ、テスト、UI、実装のルール）、`feature-review/`（機能全体の見直し）、`improve-ui/`（画面の文言・順番・ボタンの仕上げ）。PC へのリンクの手順は `agent-workflow` を例にしているので、ほかも同じ形でリンクする。プロジェクト固有の設定（各 Project の `preferences.md` など）と、Secrets の値はこのリポジトリに置かない。
 
 ## PC（WSL）での設定
 
