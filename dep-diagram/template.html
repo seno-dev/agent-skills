@@ -1,0 +1,839 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dependency diagram</title>
+<style>
+:root{
+  /* Colours are Chakra UI v3 tokens and semantic tokens with Chakra's own CSS variable names (--chakra-colors-*).
+     Source: github.com/chakra-ui/chakra-ui packages/react/src/theme/tokens/colors.ts (789c93c) and semantic-tokens/colors.ts (c3cb383) */
+  --chakra-colors-black:#09090B;--chakra-colors-white:#FFFFFF;
+  --chakra-colors-gray-50:#fafafa;--chakra-colors-gray-100:#f4f4f5;--chakra-colors-gray-200:#e4e4e7;--chakra-colors-gray-300:#d4d4d8;--chakra-colors-gray-400:#a1a1aa;--chakra-colors-gray-500:#71717a;--chakra-colors-gray-600:#52525b;--chakra-colors-gray-700:#3f3f46;--chakra-colors-gray-800:#27272a;--chakra-colors-gray-900:#18181b;--chakra-colors-gray-950:#111111;
+  --chakra-colors-red-50:#fef2f2;--chakra-colors-red-100:#fee2e2;--chakra-colors-red-200:#fecaca;--chakra-colors-red-300:#fca5a5;--chakra-colors-red-400:#f87171;--chakra-colors-red-500:#ef4444;--chakra-colors-red-600:#dc2626;--chakra-colors-red-700:#991919;--chakra-colors-red-800:#511111;--chakra-colors-red-900:#300c0c;--chakra-colors-red-950:#1f0808;
+  --chakra-colors-orange-50:#fff7ed;--chakra-colors-orange-100:#ffedd5;--chakra-colors-orange-200:#fed7aa;--chakra-colors-orange-300:#fdba74;--chakra-colors-orange-400:#fb923c;--chakra-colors-orange-500:#f97316;--chakra-colors-orange-600:#ea580c;--chakra-colors-orange-700:#92310a;--chakra-colors-orange-800:#6c2710;--chakra-colors-orange-900:#3b1106;--chakra-colors-orange-950:#220a04;
+  --chakra-colors-yellow-50:#fefce8;--chakra-colors-yellow-100:#fef9c3;--chakra-colors-yellow-200:#fef08a;--chakra-colors-yellow-300:#fde047;--chakra-colors-yellow-400:#facc15;--chakra-colors-yellow-500:#eab308;--chakra-colors-yellow-600:#ca8a04;--chakra-colors-yellow-700:#845209;--chakra-colors-yellow-800:#713f12;--chakra-colors-yellow-900:#422006;--chakra-colors-yellow-950:#281304;
+  --chakra-colors-green-50:#f0fdf4;--chakra-colors-green-100:#dcfce7;--chakra-colors-green-200:#bbf7d0;--chakra-colors-green-300:#86efac;--chakra-colors-green-400:#4ade80;--chakra-colors-green-500:#22c55e;--chakra-colors-green-600:#16a34a;--chakra-colors-green-700:#116932;--chakra-colors-green-800:#124a28;--chakra-colors-green-900:#042713;--chakra-colors-green-950:#03190c;
+  --chakra-colors-teal-50:#f0fdfa;--chakra-colors-teal-100:#ccfbf1;--chakra-colors-teal-200:#99f6e4;--chakra-colors-teal-300:#5eead4;--chakra-colors-teal-400:#2dd4bf;--chakra-colors-teal-500:#14b8a6;--chakra-colors-teal-600:#0d9488;--chakra-colors-teal-700:#0c5d56;--chakra-colors-teal-800:#114240;--chakra-colors-teal-900:#032726;--chakra-colors-teal-950:#021716;
+  --chakra-colors-blue-50:#eff6ff;--chakra-colors-blue-100:#dbeafe;--chakra-colors-blue-200:#bfdbfe;--chakra-colors-blue-300:#a3cfff;--chakra-colors-blue-400:#60a5fa;--chakra-colors-blue-500:#3b82f6;--chakra-colors-blue-600:#2563eb;--chakra-colors-blue-700:#173da6;--chakra-colors-blue-800:#1a3478;--chakra-colors-blue-900:#14204a;--chakra-colors-blue-950:#0c142e;
+  --chakra-colors-cyan-50:#ecfeff;--chakra-colors-cyan-100:#cffafe;--chakra-colors-cyan-200:#a5f3fc;--chakra-colors-cyan-300:#67e8f9;--chakra-colors-cyan-400:#22d3ee;--chakra-colors-cyan-500:#06b6d4;--chakra-colors-cyan-600:#0891b2;--chakra-colors-cyan-700:#0c5c72;--chakra-colors-cyan-800:#134152;--chakra-colors-cyan-900:#072a38;--chakra-colors-cyan-950:#051b24;
+  --chakra-colors-purple-50:#faf5ff;--chakra-colors-purple-100:#f3e8ff;--chakra-colors-purple-200:#e9d5ff;--chakra-colors-purple-300:#d8b4fe;--chakra-colors-purple-400:#c084fc;--chakra-colors-purple-500:#a855f7;--chakra-colors-purple-600:#9333ea;--chakra-colors-purple-700:#641ba3;--chakra-colors-purple-800:#4a1772;--chakra-colors-purple-900:#2f0553;--chakra-colors-purple-950:#1a032e;
+  --chakra-colors-pink-50:#fdf2f8;--chakra-colors-pink-100:#fce7f3;--chakra-colors-pink-200:#fbcfe8;--chakra-colors-pink-300:#f9a8d4;--chakra-colors-pink-400:#f472b6;--chakra-colors-pink-500:#ec4899;--chakra-colors-pink-600:#db2777;--chakra-colors-pink-700:#a41752;--chakra-colors-pink-800:#6d0e34;--chakra-colors-pink-900:#45061f;--chakra-colors-pink-950:#2c0514;
+  /* semantic tokens, light (semantic-tokens/colors.ts) */
+  --chakra-colors-bg:var(--chakra-colors-white);--chakra-colors-bg-subtle:var(--chakra-colors-gray-50);--chakra-colors-bg-muted:var(--chakra-colors-gray-100);--chakra-colors-bg-emphasized:var(--chakra-colors-gray-200);--chakra-colors-bg-inverted:var(--chakra-colors-black);--chakra-colors-bg-panel:var(--chakra-colors-white);--chakra-colors-bg-error:var(--chakra-colors-red-50);--chakra-colors-bg-warning:var(--chakra-colors-orange-50);--chakra-colors-bg-success:var(--chakra-colors-green-50);--chakra-colors-bg-info:var(--chakra-colors-blue-50);
+  --chakra-colors-fg:var(--chakra-colors-black);--chakra-colors-fg-muted:var(--chakra-colors-gray-600);--chakra-colors-fg-subtle:var(--chakra-colors-gray-400);--chakra-colors-fg-inverted:var(--chakra-colors-gray-50);--chakra-colors-fg-error:var(--chakra-colors-red-500);--chakra-colors-fg-warning:var(--chakra-colors-orange-600);--chakra-colors-fg-success:var(--chakra-colors-green-600);--chakra-colors-fg-info:var(--chakra-colors-blue-600);
+  --chakra-colors-border:var(--chakra-colors-gray-200);--chakra-colors-border-muted:var(--chakra-colors-gray-100);--chakra-colors-border-subtle:var(--chakra-colors-gray-50);--chakra-colors-border-emphasized:var(--chakra-colors-gray-300);--chakra-colors-border-inverted:var(--chakra-colors-gray-800);--chakra-colors-border-error:var(--chakra-colors-red-500);--chakra-colors-border-warning:var(--chakra-colors-orange-500);--chakra-colors-border-success:var(--chakra-colors-green-500);--chakra-colors-border-info:var(--chakra-colors-blue-500);
+  --chakra-colors-gray-contrast:var(--chakra-colors-white);--chakra-colors-gray-fg:var(--chakra-colors-gray-800);--chakra-colors-gray-subtle:var(--chakra-colors-gray-100);--chakra-colors-gray-muted:var(--chakra-colors-gray-200);--chakra-colors-gray-emphasized:var(--chakra-colors-gray-300);--chakra-colors-gray-solid:var(--chakra-colors-gray-900);--chakra-colors-gray-focus-ring:var(--chakra-colors-gray-400);--chakra-colors-gray-border:var(--chakra-colors-gray-200);
+  --chakra-colors-red-contrast:white;--chakra-colors-red-fg:var(--chakra-colors-red-700);--chakra-colors-red-subtle:var(--chakra-colors-red-100);--chakra-colors-red-muted:var(--chakra-colors-red-200);--chakra-colors-red-emphasized:var(--chakra-colors-red-300);--chakra-colors-red-solid:var(--chakra-colors-red-600);--chakra-colors-red-focus-ring:var(--chakra-colors-red-500);--chakra-colors-red-border:var(--chakra-colors-red-500);
+  --chakra-colors-orange-contrast:white;--chakra-colors-orange-fg:var(--chakra-colors-orange-700);--chakra-colors-orange-subtle:var(--chakra-colors-orange-100);--chakra-colors-orange-muted:var(--chakra-colors-orange-200);--chakra-colors-orange-emphasized:var(--chakra-colors-orange-300);--chakra-colors-orange-solid:var(--chakra-colors-orange-600);--chakra-colors-orange-focus-ring:var(--chakra-colors-orange-500);--chakra-colors-orange-border:var(--chakra-colors-orange-500);
+  --chakra-colors-green-contrast:white;--chakra-colors-green-fg:var(--chakra-colors-green-700);--chakra-colors-green-subtle:var(--chakra-colors-green-100);--chakra-colors-green-muted:var(--chakra-colors-green-200);--chakra-colors-green-emphasized:var(--chakra-colors-green-300);--chakra-colors-green-solid:var(--chakra-colors-green-600);--chakra-colors-green-focus-ring:var(--chakra-colors-green-500);--chakra-colors-green-border:var(--chakra-colors-green-500);
+  --chakra-colors-blue-contrast:white;--chakra-colors-blue-fg:var(--chakra-colors-blue-700);--chakra-colors-blue-subtle:var(--chakra-colors-blue-100);--chakra-colors-blue-muted:var(--chakra-colors-blue-200);--chakra-colors-blue-emphasized:var(--chakra-colors-blue-300);--chakra-colors-blue-solid:var(--chakra-colors-blue-600);--chakra-colors-blue-focus-ring:var(--chakra-colors-blue-500);--chakra-colors-blue-border:var(--chakra-colors-blue-500);
+  --chakra-colors-yellow-contrast:black;--chakra-colors-yellow-fg:var(--chakra-colors-yellow-800);--chakra-colors-yellow-subtle:var(--chakra-colors-yellow-100);--chakra-colors-yellow-muted:var(--chakra-colors-yellow-200);--chakra-colors-yellow-emphasized:var(--chakra-colors-yellow-300);--chakra-colors-yellow-solid:var(--chakra-colors-yellow-300);--chakra-colors-yellow-focus-ring:var(--chakra-colors-yellow-500);--chakra-colors-yellow-border:var(--chakra-colors-yellow-500);
+  --chakra-colors-teal-contrast:white;--chakra-colors-teal-fg:var(--chakra-colors-teal-700);--chakra-colors-teal-subtle:var(--chakra-colors-teal-100);--chakra-colors-teal-muted:var(--chakra-colors-teal-200);--chakra-colors-teal-emphasized:var(--chakra-colors-teal-300);--chakra-colors-teal-solid:var(--chakra-colors-teal-600);--chakra-colors-teal-focus-ring:var(--chakra-colors-teal-500);--chakra-colors-teal-border:var(--chakra-colors-teal-500);
+  --chakra-colors-purple-contrast:white;--chakra-colors-purple-fg:var(--chakra-colors-purple-700);--chakra-colors-purple-subtle:var(--chakra-colors-purple-100);--chakra-colors-purple-muted:var(--chakra-colors-purple-200);--chakra-colors-purple-emphasized:var(--chakra-colors-purple-300);--chakra-colors-purple-solid:var(--chakra-colors-purple-600);--chakra-colors-purple-focus-ring:var(--chakra-colors-purple-500);--chakra-colors-purple-border:var(--chakra-colors-purple-500);
+  --chakra-colors-pink-contrast:white;--chakra-colors-pink-fg:var(--chakra-colors-pink-700);--chakra-colors-pink-subtle:var(--chakra-colors-pink-100);--chakra-colors-pink-muted:var(--chakra-colors-pink-200);--chakra-colors-pink-emphasized:var(--chakra-colors-pink-300);--chakra-colors-pink-solid:var(--chakra-colors-pink-600);--chakra-colors-pink-focus-ring:var(--chakra-colors-pink-500);--chakra-colors-pink-border:var(--chakra-colors-pink-500);
+  --chakra-colors-cyan-contrast:white;--chakra-colors-cyan-fg:var(--chakra-colors-cyan-700);--chakra-colors-cyan-subtle:var(--chakra-colors-cyan-100);--chakra-colors-cyan-muted:var(--chakra-colors-cyan-200);--chakra-colors-cyan-emphasized:var(--chakra-colors-cyan-300);--chakra-colors-cyan-solid:var(--chakra-colors-cyan-600);--chakra-colors-cyan-focus-ring:var(--chakra-colors-cyan-500);--chakra-colors-cyan-border:var(--chakra-colors-cyan-500);
+  /* app variables -> Chakra tokens (neutral UI = gray scale / semantic bg, fg, border) */
+  --bg:var(--chakra-colors-bg);--bg2:var(--chakra-colors-bg-subtle);--card:var(--chakra-colors-bg-panel);
+  --text:var(--chakra-colors-fg);--text2:var(--chakra-colors-fg-muted);--text3:var(--chakra-colors-gray-500);
+  --line:var(--chakra-colors-border);--line2:var(--chakra-colors-border-muted);--dirline:var(--chakra-colors-border-emphasized);
+  --sel:var(--chakra-colors-blue-subtle);--out:var(--chakra-colors-blue-border);--in:var(--chakra-colors-orange-border);--edge:var(--chakra-colors-gray-500);
+  /* edge colour cycle: Chakra 500 (light) / 300 (dark) */
+  --ec0:var(--chakra-colors-red-500);--ec1:var(--chakra-colors-orange-500);--ec2:var(--chakra-colors-yellow-500);--ec3:var(--chakra-colors-green-500);--ec4:var(--chakra-colors-teal-500);--ec5:var(--chakra-colors-cyan-500);--ec6:var(--chakra-colors-blue-500);--ec7:var(--chakra-colors-purple-500);--ec8:var(--chakra-colors-pink-500);
+}
+@media (prefers-color-scheme:dark){
+  :root{
+  --chakra-colors-bg:var(--chakra-colors-black);--chakra-colors-bg-subtle:var(--chakra-colors-gray-950);--chakra-colors-bg-muted:var(--chakra-colors-gray-900);--chakra-colors-bg-emphasized:var(--chakra-colors-gray-800);--chakra-colors-bg-inverted:var(--chakra-colors-white);--chakra-colors-bg-panel:var(--chakra-colors-gray-950);--chakra-colors-bg-error:var(--chakra-colors-red-950);--chakra-colors-bg-warning:var(--chakra-colors-orange-950);--chakra-colors-bg-success:var(--chakra-colors-green-950);--chakra-colors-bg-info:var(--chakra-colors-blue-950);
+  --chakra-colors-fg:var(--chakra-colors-gray-50);--chakra-colors-fg-muted:var(--chakra-colors-gray-400);--chakra-colors-fg-subtle:var(--chakra-colors-gray-500);--chakra-colors-fg-inverted:var(--chakra-colors-black);--chakra-colors-fg-error:var(--chakra-colors-red-400);--chakra-colors-fg-warning:var(--chakra-colors-orange-300);--chakra-colors-fg-success:var(--chakra-colors-green-300);--chakra-colors-fg-info:var(--chakra-colors-blue-300);
+  --chakra-colors-border:var(--chakra-colors-gray-800);--chakra-colors-border-muted:var(--chakra-colors-gray-900);--chakra-colors-border-subtle:var(--chakra-colors-gray-950);--chakra-colors-border-emphasized:var(--chakra-colors-gray-700);--chakra-colors-border-inverted:var(--chakra-colors-gray-200);--chakra-colors-border-error:var(--chakra-colors-red-400);--chakra-colors-border-warning:var(--chakra-colors-orange-400);--chakra-colors-border-success:var(--chakra-colors-green-400);--chakra-colors-border-info:var(--chakra-colors-blue-400);
+  --chakra-colors-gray-contrast:var(--chakra-colors-black);--chakra-colors-gray-fg:var(--chakra-colors-gray-200);--chakra-colors-gray-subtle:var(--chakra-colors-gray-900);--chakra-colors-gray-muted:var(--chakra-colors-gray-800);--chakra-colors-gray-emphasized:var(--chakra-colors-gray-700);--chakra-colors-gray-solid:var(--chakra-colors-white);--chakra-colors-gray-border:var(--chakra-colors-gray-800);
+  --chakra-colors-red-fg:var(--chakra-colors-red-300);--chakra-colors-red-subtle:var(--chakra-colors-red-900);--chakra-colors-red-muted:var(--chakra-colors-red-800);--chakra-colors-red-emphasized:var(--chakra-colors-red-700);--chakra-colors-red-border:var(--chakra-colors-red-400);
+  --chakra-colors-orange-contrast:black;--chakra-colors-orange-fg:var(--chakra-colors-orange-300);--chakra-colors-orange-subtle:var(--chakra-colors-orange-900);--chakra-colors-orange-muted:var(--chakra-colors-orange-800);--chakra-colors-orange-emphasized:var(--chakra-colors-orange-700);--chakra-colors-orange-solid:var(--chakra-colors-orange-500);--chakra-colors-orange-border:var(--chakra-colors-orange-400);
+  --chakra-colors-green-fg:var(--chakra-colors-green-300);--chakra-colors-green-subtle:var(--chakra-colors-green-900);--chakra-colors-green-muted:var(--chakra-colors-green-800);--chakra-colors-green-emphasized:var(--chakra-colors-green-700);--chakra-colors-green-border:var(--chakra-colors-green-400);
+  --chakra-colors-blue-fg:var(--chakra-colors-blue-300);--chakra-colors-blue-subtle:var(--chakra-colors-blue-900);--chakra-colors-blue-muted:var(--chakra-colors-blue-800);--chakra-colors-blue-emphasized:var(--chakra-colors-blue-700);--chakra-colors-blue-border:var(--chakra-colors-blue-400);
+  --chakra-colors-yellow-fg:var(--chakra-colors-yellow-300);--chakra-colors-yellow-subtle:var(--chakra-colors-yellow-900);--chakra-colors-yellow-muted:var(--chakra-colors-yellow-800);--chakra-colors-yellow-emphasized:var(--chakra-colors-yellow-700);
+  --chakra-colors-teal-fg:var(--chakra-colors-teal-300);--chakra-colors-teal-subtle:var(--chakra-colors-teal-900);--chakra-colors-teal-muted:var(--chakra-colors-teal-800);--chakra-colors-teal-emphasized:var(--chakra-colors-teal-700);--chakra-colors-teal-border:var(--chakra-colors-teal-400);
+  --chakra-colors-purple-fg:var(--chakra-colors-purple-300);--chakra-colors-purple-subtle:var(--chakra-colors-purple-900);--chakra-colors-purple-muted:var(--chakra-colors-purple-800);--chakra-colors-purple-emphasized:var(--chakra-colors-purple-700);--chakra-colors-purple-border:var(--chakra-colors-purple-400);
+  --chakra-colors-pink-fg:var(--chakra-colors-pink-300);--chakra-colors-pink-subtle:var(--chakra-colors-pink-900);--chakra-colors-pink-muted:var(--chakra-colors-pink-800);--chakra-colors-pink-emphasized:var(--chakra-colors-pink-700);--chakra-colors-pink-border:var(--chakra-colors-pink-400);
+  --chakra-colors-cyan-fg:var(--chakra-colors-cyan-300);--chakra-colors-cyan-subtle:var(--chakra-colors-cyan-900);--chakra-colors-cyan-muted:var(--chakra-colors-cyan-800);--chakra-colors-cyan-emphasized:var(--chakra-colors-cyan-700);--chakra-colors-cyan-border:var(--chakra-colors-cyan-400);
+  --ec0:var(--chakra-colors-red-300);--ec1:var(--chakra-colors-orange-300);--ec2:var(--chakra-colors-yellow-300);--ec3:var(--chakra-colors-green-300);--ec4:var(--chakra-colors-teal-300);--ec5:var(--chakra-colors-cyan-300);--ec6:var(--chakra-colors-blue-300);--ec7:var(--chakra-colors-purple-300);--ec8:var(--chakra-colors-pink-300);
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 -apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans CJK JP","Noto Sans JP","Yu Gothic",Meiryo,sans-serif}
+#page{min-width:1280px;padding:0 20px}
+h1{font-size:20px;margin:0;padding-top:16px}
+/* legend / filter */
+.bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px;margin:10px 0}
+.filter{display:flex;gap:8px}
+.filter button{font:inherit;font-size:13.5px;padding:5px 13px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--text);cursor:pointer}
+.filter button[style*="--mc"]{border-color:color-mix(in srgb,var(--mc) 55%,var(--line))}
+.filter button[style*="--mc"]::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--mc);margin-right:6px}
+.filter button[aria-pressed=true]{background:var(--text);color:var(--bg);border-color:var(--text)}
+.filter .n{opacity:.6;margin-left:4px;font-size:11.5px}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--text2);align-items:center}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px;border:1px solid var(--line)}
+.legend .ln{display:inline-block;width:22px;height:0;border-top:2.5px solid;margin-right:5px;vertical-align:3px}
+.legend .sep{color:var(--text3)}
+/* board: two max-content panes + a middle gutter; only the board scrolls sideways */
+#scroll{overflow-x:auto;overflow-y:hidden;display:grid;justify-content:safe center}
+#scroll>.colhd,#scroll>#board{width:max-content}
+.colhd{margin:8px 40px 0;display:grid;grid-template-columns:minmax(360px,1fr) clamp(160px,12vw,220px) minmax(360px,1fr)}
+.colhd div{font-size:12px;color:var(--text3);padding:0 2px 4px}
+#board{position:relative;margin:0 40px;display:grid;grid-template-columns:minmax(360px,1fr) clamp(160px,12vw,220px) minmax(360px,1fr);align-items:start;padding-bottom:30px}
+#colL{grid-column:1}#colR{grid-column:3}
+#colL,#colR{zoom:.9}
+#edges{position:absolute;left:0;top:0;pointer-events:none;overflow:visible;z-index:3}
+/* directory and file cards */
+.dir{border:1px solid var(--dirline);border-radius:10px;background:transparent;margin:0 0 8px;overflow:hidden}
+.dir .dir{margin:6px 0 0}
+.dir>.dh{display:flex;align-items:center;gap:6px;padding:6px 20px}
+.dir>.dh .nm{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;font-weight:700}
+.dir>.dh .ct{margin-left:auto;color:var(--text3);font-size:11.5px}
+.dir>.db{padding:0 48px 8px}
+.file{border:1px solid var(--line);border-left-width:5px;border-left-color:var(--mc,var(--line));border-radius:8px;background:var(--zt,var(--card));margin:6px 0 0;cursor:pointer;transition:opacity .12s}
+.file.sel{outline:2px solid var(--text);outline-offset:0}
+.file.act{outline:1.5px solid var(--text3)}
+.file.dim,.file.fdim{opacity:.28}
+.fh{display:flex;flex-wrap:nowrap;white-space:nowrap;align-items:center;gap:4px 7px;padding:6px 9px 4px;cursor:pointer}
+.fh>*{flex:none}
+.fh .fnm{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;font-weight:700}
+.badge{font-size:10.5px;line-height:1;padding:3px 8px;border-radius:999px;white-space:nowrap;font-weight:600;background:var(--mb,var(--chakra-colors-gray-muted));color:var(--mf,var(--chakra-colors-gray-fg))}
+.badge.mk{background:none;padding:0;font-size:12px;font-weight:700}
+.badge.muted{background:var(--zb,var(--chakra-colors-gray-muted));color:var(--zf,var(--chakra-colors-gray-fg))}
+.badge.test{background:var(--chakra-colors-blue-muted);color:var(--chakra-colors-blue-fg)}
+.zt{margin-left:auto;font-size:10.5px;line-height:1;padding:3px 8px;border-radius:999px;font-weight:600;background:var(--zb,var(--chakra-colors-gray-muted));color:var(--zf,var(--chakra-colors-gray-fg))}
+.file>.sm,.fns{contain:inline-size} /* the card width comes from the file-name row only */
+.file>.sm{font-size:11.5px;line-height:1.5;color:var(--text2);padding:0 9px 4px}
+.fns{padding:0 6px 6px}
+.fn{display:flex;align-items:baseline;gap:6px;padding:2px 6px;border-radius:5px;font-size:12px;min-width:0}
+.fn .mk{color:var(--text3);font-size:10px;flex:none;width:11px;text-align:center}
+.fn .nm{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;flex:0 1 auto;cursor:pointer}
+.fn .nm:hover{background:rgba(127,127,127,.2);border-radius:3px}
+.fn .kd{margin-left:auto;color:var(--text3);font-size:10.5px;white-space:nowrap;flex:none}
+.fn.sel{background:var(--sel);box-shadow:inset 0 0 0 1.5px var(--text)}
+.fn.act{background:rgba(127,127,127,.2)}
+/* detail panel */
+#panel{position:fixed;left:20px;right:20px;bottom:0;z-index:5;display:none;background:var(--card);border:1px solid var(--line);border-bottom:0;border-radius:12px 12px 0 0;box-shadow:0 -4px 16px rgba(0,0,0,.12);padding:10px 40px 10px 14px;max-height:40vh;overflow:auto}
+#spacer{height:calc(40vh + 16px)}
+#panel.on{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr) minmax(0,1fr);gap:16px}
+#panel h3{margin:0 0 4px;font-size:12px;color:var(--text3);font-weight:600}
+#panel .ph{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+#panel .pp{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;font-weight:700;word-break:break-all}
+#panel .sm{font-size:13px;color:var(--text2);margin:2px 0 6px}
+#panel .x{position:absolute;top:8px;right:10px;width:24px;height:24px;padding:0;border:0;border-radius:50%;background:none;color:var(--text2);font:inherit;font-size:20px;line-height:22px;text-align:center;cursor:pointer}
+#panel .x:hover{background:var(--bg2);color:var(--text)}
+.it{padding:4px 6px;border-radius:6px;border-bottom:1px solid var(--line2);cursor:pointer}
+.it.cur{background:var(--sel)}
+.it .in{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;font-weight:700}
+.it .k{font-size:11px;color:var(--text3);margin-left:6px}
+.it .tx{font-size:12.5px;color:var(--text2)}
+.lg{border:1px solid var(--line);border-left:4px solid var(--mc,var(--line));border-radius:8px;background:var(--zt,var(--bg2));padding:4px 8px 6px;margin:0 0 6px}
+.lh{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.lf{font:inherit;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;font-weight:700;color:var(--text);background:none;border:0;padding:0;cursor:pointer;text-align:left}
+.lf:hover{text-decoration:underline}
+.ll{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.lk{font:inherit;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11.5px;font-weight:600;padding:2px 7px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--text);cursor:pointer}
+.lk:hover{background:var(--bg2)}
+.ex{font-size:11.5px;color:var(--text3);margin-top:6px}
+.emp{font-size:12.5px;color:var(--text3)}
+</style>
+</head>
+<body>
+<div id="page">
+<h1 id="title" hidden></h1>
+<div class="bar">
+  <div class="filter" id="filter" role="group"></div>
+  <div class="legend" id="legend"></div>
+</div>
+<div id="scroll"><div class="colhd" id="colhd"><div id="hdL"></div><div></div><div id="hdR"></div></div>
+<div id="board">
+  <div id="colL"></div><div id="colR"></div>
+  <svg id="edges" aria-hidden="true"></svg>
+</div></div>
+<div id="spacer" aria-hidden="true"></div>
+<div id="panel" aria-live="polite"></div>
+</div>
+<script>
+"use strict";
+/* ============================================================================
+   1. CONFIG — the only layout rule tied to a directory name, plus UI strings and geometry
+   ========================================================================== */
+var CONFIG = {
+  rightDir: "features",   // files under <rightDir>/ go to the right pane; everything else to the left
+  edgeColors: 9,             // number of --ecN colours in the CSS cycle (Chakra red, orange, yellow, green, teal, cyan, blue, purple, pink)
+  stub: 48,                  // horizontal run out of a card before a cross-pane curve starts
+  fan: 28,                   // how far past the nearest file a bundle junction sits
+  laneGap: 9,                // spacing of dotted lanes inside a directory card
+  corner: 8,                 // corner radius of dotted orthogonal lines
+  tapLead: 24,               // how far (px) past its own row a solid bundle's branch joins its trunk (and short of its row it leaves it)
+  anchorInset: 18,           // file-level out/in anchors sit this far below the card top / above the card bottom
+  shift: 4,                  // out/in anchors on function rows are shifted up/down by this
+  pad: 32, midMin: 128, pagePad: 20   // outer margin = max(pad, midMin, line overhang + pad); pagePad = #page side padding
+};
+var T = {                    // UI strings
+  all: "すべて", filterLabel: "変更の種類で絞り込む", others: "以外", files: "ファイル",
+  uses: "使う", usedBy: "使われる", weak: "テスト",
+  test: "テスト", wholeFile: "全体",
+  none: "–", clear: "選択を外す", extra: "図に出していない import: "
+};
+
+/* ============================================================================
+   2. DATA — replace this object to show another project
+   ----------------------------------------------------------------------------
+   DATA = {
+     title?:      string                    page heading (also document.title)
+     marks?:      [{label, color, badge?}]  file status labels; badge = short text shown on cards (e.g. A / M / D); no badge -> no badge on cards (filter chips always show the full label); color = Chakra colour scheme name (git-like: added green, modified yellow, deleted red, unchanged gray) or any CSS colour.
+                                            A filter chip is shown only for labels some file uses
+     zones?:      [{id, label, color}]      optional file roles; card tint = that Chakra scheme's subtle colour (a file without zone is untinted)
+     tagSymbols?: {tag: symbol}             one-char prefix on a function row per fn.tag
+     files: [{
+       path:     "dir/sub/file.ext"         unique; the directory tree is derived from the paths
+       summary?: string                     one line shown in the card
+       mark?:    one of DATA.marks          left border colour, badge, filter
+       zone?:    one of DATA.zones[].id     card tint
+       test?:    true                       "test" badge; its edges are drawn only when selected
+       extra?:   string                     note shown in the detail panel
+       fns?: [{ name, id?, kind?, note?, tag? }]   functions / exports shown as rows (id defaults to name)
+     }]
+     edges: [[from, to, {weak?:true}?]]     from/to = "path" or "path#fnId"; "uses" direction from → to.
+                                            weak (or from a test file) = dashed, drawn only when an end is selected
+   }
+   ========================================================================== */
+/* DATA:BEGIN — replace everything between BEGIN and END with the real diff */
+var DATA = {
+  title: "Example — what the change touches",
+  marks: [{label: "added", color: "green", badge: "A"}, {label: "modified", color: "yellow", badge: "M"}, {label: "deleted", color: "red", badge: "D"}, {label: "untouched", color: "gray"}],
+  tagSymbols: {add: "+", mod: "~", del: "-"},
+  zones: [{id: "entry", label: "Entry", color: "teal"}, {id: "logic", label: "Logic", color: "purple"}],
+  files: [
+    {path: "src/main.ext", mark: "modified", zone: "entry", summary: "Entry point.",
+     fns: [{name: "run", kind: "function", note: "Starts the app."}]},
+    {path: "src/util.ext", mark: "untouched", zone: "logic", summary: "Shared helpers.",
+     fns: [{name: "format", kind: "function", note: "Formats a value."}]},
+    {path: "features/feature-a/core.ext", mark: "added", zone: "logic", summary: "Core of the new feature.",
+     fns: [{name: "compute", kind: "function", note: "Does the work."}]},
+    {path: "features/feature-a/core.test.ext", mark: "added", test: true, summary: "Tests for core.",
+     fns: [{name: "core suite", id: "suite", kind: "test", note: "Basic cases."}]}
+  ],
+  edges: [
+    ["src/main.ext#run", "features/feature-a/core.ext#compute"],
+    ["features/feature-a/core.ext#compute", "src/util.ext#format"],
+    ["features/feature-a/core.test.ext", "features/feature-a/core.ext#compute"]
+  ]
+};
+/* DATA:END */
+
+/* ============================================================================
+   3. MODEL — indexes, resolved edges, directory tree (derived from paths)
+   ========================================================================== */
+var FILES = DATA.files, MARKS = DATA.marks || [], MARKCOLOR = {}, ZONES = DATA.zones || [], TAGS = DATA.tagSymbols || {};
+var MAP = {}, EDGES = [], TREE = {name: "", path: "", kids: {}, file: null};
+
+function base(p) { return p.slice(p.lastIndexOf("/") + 1); }
+function dirOf(p) { var i = p.lastIndexOf("/"); return i < 0 ? "" : p.slice(0, i); }
+function side(p) { return p.indexOf(CONFIG.rightDir + "/") === 0 ? "R" : "L"; }
+function fnKey(it) { return it.id || it.name; }
+// a colour key is a Chakra colour scheme name (gray, red, orange, yellow, green, teal, blue, cyan, purple, pink) -> its semantic tokens;
+// any other string is used as a raw CSS colour. c = border/dot, f = text, s = subtle background (card tint), m = muted background (badges)
+function scheme(c) {
+  if (/^[a-z]+$/.test(c)) { var v = function (k) { return "var(--chakra-colors-" + c + "-" + k + ")"; }; return {c: v("border"), f: v("fg"), s: v("subtle"), m: v("muted")}; }
+  return {c: c, f: c, s: "color-mix(in srgb," + c + " 20%,var(--card))", m: "color-mix(in srgb," + c + " 25%,var(--card))"};
+}
+var MARKFG = {}, MARKBG = {}, MARKBADGE = {}, ZMAP = {};
+MARKS.forEach(function (m) { var k = scheme(m.color); MARKCOLOR[m.label] = k.c; MARKFG[m.label] = k.f; MARKBG[m.label] = k.m; if (m.badge) MARKBADGE[m.label] = m.badge; });
+ZONES.forEach(function (z) { ZMAP[z.id] = {label: z.label, k: scheme(z.color || "gray")}; });
+// which pane a top-level tree node belongs to
+function paneOf(n) { return side(n.file ? n.path : n.path + "/"); }
+
+FILES.forEach(function (f) {
+  if (MAP[f.path]) throw new Error("duplicate path " + f.path);
+  f.fns = f.fns || [];
+  MAP[f.path] = f;
+  var parts = f.path.split("/"), cur = TREE;
+  parts.forEach(function (part, i) {
+    if (!cur.kids[part]) cur.kids[part] = {name: part, path: parts.slice(0, i + 1).join("/"), kids: {}, file: null};
+    cur = cur.kids[part];
+    if (i === parts.length - 1) cur.file = f;
+  });
+});
+
+// "path" or "path#fnId" -> {path, i} (i = null for the file itself)
+function resolveRef(ref) {
+  var h = ref.indexOf("#"), path = h < 0 ? ref : ref.slice(0, h), f = MAP[path];
+  if (!f) throw new Error("edge refers to unknown file " + path);
+  if (h < 0) return {path: path, i: null};
+  var id = ref.slice(h + 1), i = f.fns.map(fnKey).indexOf(id);
+  if (i < 0) throw new Error("no function " + id + " in " + path);
+  return {path: path, i: i};
+}
+DATA.edges.forEach(function (e) {
+  var a = resolveRef(e[0]), b = resolveRef(e[1]);
+  EDGES.push({a: a.path, ai: a.i, b: b.path, bi: b.i, weak: !!(e[2] && e[2].weak) || !!MAP[a.path].test});
+});
+
+function nkids(n) { return Object.keys(n.kids); }
+function fcount(n) { if (n.file) return 1; return nkids(n).reduce(function (t, k) { return t + fcount(n.kids[k]); }, 0); }
+// two paths are "same hierarchy" when one directory contains (or equals) the other
+function sameHier(a, b) { var x = dirOf(a), y = dirOf(b); return x === y || x.indexOf(y + "/") === 0 || y.indexOf(x + "/") === 0; }
+function commonDir(a, b) { var x = dirOf(a), y = dirOf(b); return x.length <= y.length ? x : y; }
+
+/* ============================================================================
+   4. STATE — filter, selection, active set
+   ========================================================================== */
+var state = {filter: T.all, sel: null};   // sel: {path, i} (i = null for the whole file)
+function $(id) { return document.getElementById(id); }
+function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return {"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]; }); }
+function matches(f) { return state.filter === T.all || f.mark === state.filter; }
+function visibleEdges() { var s = state.sel; return EDGES.filter(function (e) { return !e.weak || (s && (e.a === s.path || e.b === s.path)); }); }
+function activeSet() {
+  var s = state.sel; if (!s) return null;
+  var es = visibleEdges(), hit;
+  function touches(e) { return e.a === s.path || e.b === s.path; }
+  if (s.i != null) {
+    hit = es.filter(function (e) { return (e.a === s.path && e.ai === s.i) || (e.b === s.path && e.bi === s.i); });
+    if (!hit.length) hit = es.filter(touches);   // no function-level edge: show the file's edges
+  } else hit = es.filter(touches);
+  var act = {edges: hit, files: {}, fns: {}};
+  act.files[s.path] = 1;
+  hit.forEach(function (e) {
+    act.files[e.a] = 1; act.files[e.b] = 1;
+    if (e.ai != null) act.fns[e.a + "#" + e.ai] = 1;
+    if (e.bi != null) act.fns[e.b + "#" + e.bi] = 1;
+  });
+  return act;
+}
+// filter change: layout is unchanged, so restyle in place (chip state, card dimming, edge / branch / triangle opacity); with a selection, fall back to a full render
+function setFilter(k) {
+  state.filter = k;
+  if (state.sel) { render(); return; }
+  [].forEach.call($("filter").querySelectorAll("button"), function (b) { b.setAttribute("aria-pressed", String(b.getAttribute("data-f") === k)); });
+  [].forEach.call(document.querySelectorAll(".file[data-path]"), function (c) { c.classList.toggle("fdim", !matches(MAP[c.getAttribute("data-path")])); });
+  [].forEach.call($("edges").querySelectorAll("[data-mk]"), function (el) {
+    if (shownByFilter(el.getAttribute("data-mk"))) el.removeAttribute("opacity"); else el.setAttribute("opacity", "0.08");
+  });
+}
+function setSel(p, i) { state.sel = p ? {path: p, i: i == null ? null : i} : null; render(); }
+
+/* ============================================================================
+   5. RENDER — title, filter, legend, directory/file cards, detail panel
+   ========================================================================== */
+function renderChrome() {
+  if (DATA.title) { $("title").hidden = false; $("title").textContent = DATA.title; document.title = DATA.title; }
+  $("filter").setAttribute("aria-label", T.filterLabel);
+  var counts = {};
+  FILES.forEach(function (f) { counts[f.mark] = (counts[f.mark] || 0) + 1; });
+  $("filter").innerHTML = [T.all].concat(MARKS.map(function (m) { return m.label; }).filter(function (k) { return counts[k]; })).map(function (k) {
+    return '<button data-f="' + esc(k) + '" aria-pressed="' + (state.filter === k) + '"' + (MARKCOLOR[k] ? ' style="--mc:' + MARKCOLOR[k] + '"' : '') + '>' + esc(k) + '<span class="n">' + (k === T.all ? FILES.length : counts[k] || 0) + '</span></button>';
+  }).join("");
+}
+function renderLegend() {
+  var sw = function (bg, label) { return '<span><i style="background:' + bg + '"></i>' + esc(label) + '</span>'; };
+  var ln = function (style, label) { return '<span><span class="ln" style="' + style + '"></span>' + esc(label) + '</span>'; };
+  var sep = '<span class="sep">|</span>', parts = [];
+  if (ZONES.length) parts.push(ZONES.map(function (z) { return sw(ZMAP[z.id].k.s, z.label); }).join(""));
+  parts.push(ln("border-color:var(--out)", T.uses) + ln("border-color:var(--in)", T.usedBy) + ln("border-top-style:dashed;border-color:var(--edge)", T.weak));
+  $("legend").innerHTML = parts.join(sep);
+}
+function paneHeaders() {
+  $("hdL").textContent = CONFIG.rightDir + "/ " + T.others;
+  $("hdR").textContent = CONFIG.rightDir + "/";
+}
+
+function styleVars(f) {
+  var m = MARKCOLOR[f.mark], z = ZMAP[f.zone];
+  return (m ? "--mc:" + m + ";--mf:" + MARKFG[f.mark] + ";--mb:" + MARKBG[f.mark] + ";" : "") + (z ? "--zt:color-mix(in srgb," + z.k.s + " 50%,var(--card));--zf:" + z.k.f + ";--zb:" + z.k.m + ";" : "");
+}
+function badges(f) {
+  var z = ZMAP[f.zone];
+  return {
+    mark: MARKBADGE[f.mark] ? '<span class="badge mk" title="' + esc(f.mark) + '">' + esc(MARKBADGE[f.mark]) + '</span>' : "",
+    test: f.test ? '<span class="badge test">' + T.test + '</span>' : "",
+    zone: z ? z.label : ""
+  };
+}
+function fileHtml(f, act) {
+  var cls = "file", s = state.sel, isSel = s && s.path === f.path;
+  if (isSel) cls += " sel";
+  if (act) { if (act.files[f.path] && !isSel) cls += " act"; else if (!act.files[f.path]) cls += " dim"; }
+  if (!matches(f)) cls += " fdim";
+  var b = badges(f);
+  var h = '<div class="' + cls + '" data-path="' + esc(f.path) + '" style="' + styleVars(f) + '">';
+  h += '<div class="fh" title="' + esc(f.path + "\n" + (f.summary || "")) + '"><span class="fnm">' + esc(base(f.path)) + '</span>' + b.mark + b.test + (b.zone ? '<span class="zt">' + esc(b.zone) + '</span>' : "") + '</div>';
+  if (f.summary) h += '<div class="sm">' + esc(f.summary) + '</div>';
+  h += '<div class="fns">';
+  f.fns.forEach(function (it, i) {
+    var c = "fn";
+    if (isSel && s.i === i) c += " sel"; else if (act && act.fns[f.path + "#" + i]) c += " act";
+    var kind = it.kind || "";
+    h += '<div class="' + c + '" data-fn="' + esc(f.path) + '" data-i="' + i + '" title="' + esc(it.name + (kind ? "（" + kind + "）" : "")) + '"><span class="mk">' + esc(TAGS[it.tag] || "") + '</span><span class="nm">' + esc(it.name) + '</span><span class="kd">' + esc(kind) + '</span></div>';
+  });
+  return h + '</div></div>';
+}
+// single-child directory chains are shown as one card: a/b/c/
+function dirHtml(n, act) {
+  var name = n.name;
+  while (!n.file && nkids(n).length === 1 && !n.kids[nkids(n)[0]].file) { n = n.kids[nkids(n)[0]]; name += "/" + n.name; }
+  var keys = nkids(n).sort(function (a, b) {
+    var ad = n.kids[a].file ? 1 : 0, bd = n.kids[b].file ? 1 : 0;
+    return ad !== bd ? ad - bd : a.localeCompare(b);   // directories first, then alphabetical
+  });
+  var inner = keys.map(function (k) { return nodeHtml(n.kids[k], act); }).join("");
+  return '<div class="dir" data-dirbox="' + esc(n.path) + '"><div class="dh"><span class="nm">' + esc(name) + '/</span><span class="ct">' + fcount(n) + ' ' + T.files + '</span></div><div class="db">' + inner + '</div></div>';
+}
+function nodeHtml(n, act) { return n.file ? fileHtml(n.file, act) : dirHtml(n, act); }
+
+// one small card per counterpart file; inside it the counterpart functions involved (or the whole-file label when the edge is file-level)
+function linkGroups(items) {
+  var order = [], by = {};
+  items.forEach(function (it) {
+    if (!by[it.p]) { by[it.p] = {}; order.push(it.p); }
+    by[it.p][it.i == null ? "" : it.i] = 1;
+  });
+  return order.map(function (p) {
+    var f = MAP[p], b = badges(f), idx = Object.keys(by[p]).map(function (k) { return k === "" ? null : +k; });
+    idx.sort(function (x, y) { return (x == null ? -1 : x) - (y == null ? -1 : y); });
+    return '<div class="lg" style="' + styleVars(f) + '"><div class="lh"><button class="lf" data-pf="' + esc(p) + '" title="' + esc(p) + '">' + esc(base(p)) + '</button>' + b.mark + b.test + '</div><div class="ll">' +
+      idx.map(function (i) {
+        return '<button class="lk" data-pf="' + esc(p) + '"' + (i != null ? ' data-pi="' + i + '"' : '') + '>' + esc(i != null ? fnKey(f.fns[i]) : T.wholeFile) + '</button>';
+      }).join("") + '</div></div>';
+  }).join("");
+}
+function renderPanel(act) {
+  var el = $("panel"), s = state.sel;
+  if (!s) { el.className = ""; el.innerHTML = ""; return; }
+  var f = MAP[s.path], b = badges(f);
+  var h = '<div style="' + styleVars(f) + '"><div class="ph"><span class="pp">' + esc(f.path) + '</span>' + b.mark + b.test + (b.zone ? '<span class="badge muted">' + esc(b.zone) + '</span>' : "") + '</div>';
+  if (f.summary) h += '<div class="sm">' + esc(f.summary) + '</div>';
+  f.fns.forEach(function (it, i) {
+    h += '<div class="it' + (s.i === i ? ' cur' : '') + '" data-pf="' + esc(f.path) + '" data-pi="' + i + '"><span class="in">' + esc(it.name) + '</span><span class="k">' + esc((it.kind || "") + (it.tag ? "・" + it.tag : "")) + '</span><div class="tx">' + esc(it.note || "") + '</div></div>';
+  });
+  if (f.extra) h += '<div class="ex">' + T.extra + esc(f.extra) + '</div>';
+  h += '</div>';
+  var out = [], inn = [];
+  act.edges.forEach(function (e) {
+    if (e.a === s.path) out.push({p: e.b, i: e.bi}); else inn.push({p: e.a, i: e.ai});
+  });
+  var none = '<div class="emp">' + T.none + '</div>';
+  h += '<div><h3>' + T.uses + '</h3>' + (linkGroups(out) || none) + '</div>';
+  h += '<div><h3>' + T.usedBy + '</h3>' + (linkGroups(inn) || none) + '</div>';
+  el.className = "on"; el.innerHTML = h + '<button class="x" data-clear="1" aria-label="' + esc(T.clear) + '" title="' + esc(T.clear) + '">×</button>';
+}
+function render() {
+  var act = activeSet(), L = "", R = "";
+  renderChrome();
+  nkids(TREE).sort().forEach(function (k) {
+    var n = TREE.kids[k], h = nodeHtml(n, act);
+    if (paneOf(n) === "R") R += h; else L += h;
+  });
+  $("colL").innerHTML = L; $("colR").innerHTML = R;
+  renderPanel(act);
+  drawEdges();
+}
+
+/* ============================================================================
+   6. LAYOUT — card anchors on the board
+   ========================================================================== */
+var ctx;   // per-draw context: {br: board rect, glanes: dotted-lane occupancy}
+// kind "out" leaves near the card top, "in" arrives near the bottom; function rows shift by ±shift.
+// outer: same-pane lines use the pane's outer edge instead of the edge facing the middle gutter.
+function anchor(kind, path, i, outer) {
+  var br = ctx.br, card = document.querySelector('.file[data-path="' + CSS.escape(path) + '"]');
+  var r = card.getBoundingClientRect(), facesRight = (side(path) === "L") !== !!outer, y, shift = CONFIG.shift;
+  if (i != null) {
+    var rr = card.querySelector('.fn[data-i="' + i + '"]').getBoundingClientRect();
+    y = rr.top + rr.height / 2 + (kind === "out" ? -shift : shift);
+  } else y = kind === "out" ? r.top + CONFIG.anchorInset : r.bottom - CONFIG.anchorInset;
+  return {x: (facesRight ? r.right : r.left) - br.left, y: y - br.top, s: facesRight ? 1 : -1};
+}
+function ancOut(p, i, outer) { return anchor("out", p, i, outer); }
+function ancIn(p, i, outer) { return anchor("in", p, i, outer); }
+
+/* ============================================================================
+   7. EDGE ROUTING — curves, dotted lanes, bundles
+   ========================================================================== */
+var DOT = "1.5 3", WEAK = "5 4";
+
+// o: {br: branch (no mid arrows), dash}
+// op: a number, or (overview) the list of edge groups the path carries -> opacity follows the filter and the path is tagged data-mk so a filter change can restyle it in place
+var MARKIDX = {};
+function mi(label) { return MARKIDX[label] != null ? MARKIDX[label] : (MARKIDX[label] = Object.keys(MARKIDX).length); }
+function carried(gl) { var s = {}; gl.forEach(function (g) { s[mi(MAP[g.a].mark)] = 1; s[mi(MAP[g.b].mark)] = 1; }); return Object.keys(s).join(","); }
+function shownByFilter(mk) { return state.filter === T.all || mk.split(",").indexOf(String(mi(state.filter))) >= 0; }
+function pth(d, cv, op, o) {
+  o = o || {};
+  var mk = "";
+  if (Array.isArray(op)) { mk = carried(op); op = shownByFilter(mk) ? 1 : 0.08; }
+  return '<path' + (mk ? ' data-mk="' + mk + '"' : '') + (o.br ? ' data-br="1"' : '') + (o.dash ? ' stroke-dasharray="' + o.dash + '"' : '') + ' d="' + d + '" fill="none" stroke="' + cv + '" stroke-width="1"' + (op < 1 ? ' opacity="' + op + '"' : '') + '/>';
+}
+function uniq(arr) { var o = []; arr.forEach(function (x) { if (o.indexOf(x) < 0) o.push(x); }); return o; }
+function pt(x, y) { return x + "," + y; }
+function maxOf(a) { return Math.max.apply(null, a); }
+// keep a bezier handle's x between the x of the curve's two ends: the line then never doubles back over its own card or the cards beside it
+function span(x, a, b) { return Math.min(Math.max(x, Math.min(a, b)), Math.max(a, b)); }
+function minOf(a) { return Math.min.apply(null, a); }
+
+// overhang of a curve inside one pane: small for near rows, large for far rows
+function bulge(dy) { return Math.min(160, 8 + dy * 0.4); }
+function curve(A, B) {
+  var d = A.s === B.s ? bulge(Math.abs(B.y - A.y)) : Math.max(30, Math.min(120, Math.abs(B.x - A.x) * 0.45));
+  return {c1: A.x + A.s * d, c2: B.x + B.s * d};
+}
+
+// inner edge (towards the card) of the nearest common directory card, or null when it is not drawn
+function dirBoxEdge(a, b, sd) {
+  var box = document.querySelector('.dir[data-dirbox="' + CSS.escape(commonDir(a, b)) + '"]');
+  if (!box || !box.getClientRects().length) return null;
+  var r = box.getBoundingClientRect();
+  return (sd > 0 ? r.right : r.left) - ctx.br.left;
+}
+// x of the vertical part of a dotted line: lanes run inward from the directory card's outer edge, never overlapping vertically
+function grayLaneX(a, b, sd, pts) {
+  var xs = pts.map(function (p) { return p.x; }), edge = sd > 0 ? maxOf(xs) : minOf(xs);
+  var lim = dirBoxEdge(a, b, sd); if (lim == null) lim = edge + sd * 48;
+  var ys = pts.map(function (p) { return p.y; }), lo = minOf(ys) - 2, hi = maxOf(ys) + 2;
+  var key = commonDir(a, b) + "|" + sd, ch = ctx.glanes[key] || (ctx.glanes[key] = []), k = 0;
+  while (ch[k] && ch[k].some(function (v) { return v[0] < hi && lo < v[1]; })) k++;
+  (ch[k] || (ch[k] = [])).push([lo, hi]);
+  var x = lim - sd * (CONFIG.laneGap + k * CONFIG.laneGap);
+  return sd > 0 ? Math.max(edge + 4, x) : Math.min(edge - 4, x);
+}
+// orthogonal dotted line A -> lane x -> B with a small rounded corner at each turn (radius CONFIG.corner)
+function orthoPath(A, lx, B) {
+  var d1 = Math.sign(lx - A.x), d2 = Math.sign(B.x - lx), dy = Math.sign(B.y - A.y);
+  var r = Math.min(CONFIG.corner, Math.abs(B.y - A.y) / 2, Math.abs(lx - A.x), Math.abs(B.x - lx));
+  if (!dy || r <= 0) return 'M' + A.x + ',' + A.y + ' H' + lx + ' V' + B.y + ' H' + B.x;
+  return 'M' + A.x + ',' + A.y + ' H' + (lx - d1 * r) + ' Q' + pt(lx, A.y) + ' ' + pt(lx, A.y + dy * r) + ' V' + (B.y - dy * r) + ' Q' + pt(lx, B.y) + ' ' + pt(lx + d2 * r, B.y) + ' H' + B.x;
+}
+// path of one file-to-file line: same hierarchy -> dotted lane or curve; otherwise stub + curve + stub
+function route(a, b, A, B) {
+  var STUB = CONFIG.stub;
+  if (sameHier(a, b) && A.s === B.s) { var lx = grayLaneX(a, b, A.s, [A, B]); return {d: orthoPath(A, lx, B), same: true}; }
+  if (sameHier(a, b)) { var c = curve(A, B); return {d: 'M' + A.x + ',' + A.y + ' C' + c.c1 + ',' + A.y + ' ' + c.c2 + ',' + B.y + ' ' + B.x + ',' + B.y, same: true}; }
+  var A2 = {x: A.x + A.s * STUB, y: A.y, s: A.s}, B2 = {x: B.x + B.s * STUB, y: B.y, s: B.s}, c2 = curve(A2, B2);
+  if (A.s !== B.s && (B2.x - A2.x) * A.s > 0) { c2.c1 = span(c2.c1, A2.x, B2.x); c2.c2 = span(c2.c2, A2.x, B2.x); }   // cross-pane: x only moves forward
+  var d = 'M' + A.x + ',' + A.y + ' H' + A2.x + ' C' + c2.c1 + ',' + A2.y + ' ' + c2.c2 + ',' + B2.y + ' ' + B2.x + ',' + B2.y + ' H' + B.x;
+  if (A.s === B.s) {   // in one pane: always out to a lane beside the pane (outside every card of the pane), then the C-curve
+    var lx = paneLaneX(a, A.s), bg = bulge(Math.abs(B.y - A.y));
+    d = 'M' + A.x + ',' + A.y + ' H' + lx + ' C' + (lx + A.s * bg) + ',' + A.y + ' ' + (lx + A.s * bg) + ',' + B.y + ' ' + lx + ',' + B.y + ' H' + B.x;
+  }
+  return {d: d, same: false};
+}
+
+// ---- overview: one line per file pair, bundled per (direction, source dir, target dir)
+function overviewHtml() {
+  var groups = {}, order = [], bundles = {}, bundleOrder = [], colour = 0, html = [];
+  EDGES.forEach(function (e) {
+    if (e.weak) return;
+    var k = e.a + "\n" + e.b;
+    if (!groups[k]) { groups[k] = {a: e.a, b: e.b, n: 0}; order.push(k); }
+    groups[k].n++;
+  });
+  order.forEach(function (k) {
+    var g = groups[k], A = ancOut(g.a, null), B = ancIn(g.b, null);
+    var bk = (B.y >= A.y ? "v" : "^") + "\n" + dirOf(g.a) + "\n" + dirOf(g.b);
+    if (!bundles[bk]) { bundles[bk] = []; bundleOrder.push(bk); }
+    bundles[bk].push(g);
+  });
+  bundleOrder.forEach(function (bk) {
+    var gs = bundles[bk], inPane = side(gs[0].a) === side(gs[0].b), dotted = sameHier(gs[0].a, gs[0].b);
+    var ci = dotted ? 0 : (colour++) % CONFIG.edgeColors;
+    var cv = dotted ? "var(--edge)" : "var(--ec" + ci + ")";
+    if (gs.length === 1) html.push(singleLine(gs[0], cv, inPane));
+    else if (dotted && inPane) html.push(laneBundle(gs, cv));
+    else if (dotted) html.push(fanBundle(gs, cv, inPane, dotted));
+    else html.push(tapBundle(gs, cv, inPane));
+  });
+  return html;
+}
+
+function singleLine(g, cv, inPane) {
+  var A = ancOut(g.a, null, inPane), B = ancIn(g.b, null, inPane), rt = route(g.a, g.b, A, B);
+  return pth(rt.d, cv, [g], {dash: rt.same ? DOT : null});
+}
+// dotted lines inside one pane: one shared vertical lane; every branch (including the ones in the middle) meets / leaves it with a rounded corner, turning along the flow
+function laneBundle(gs, cv) {
+  var h = "", srcs = uniq(gs.map(function (g) { return g.a; })), tgts = uniq(gs.map(function (g) { return g.b; }));
+  var SP = srcs.map(function (f) { return ancOut(f, null, true); }), TP = tgts.map(function (f) { return ancIn(f, null, true); }), all = SP.concat(TP);
+  var lx = grayLaneX(gs[0].a, gs[0].b, SP[0].s, all), dx = Math.sign(lx - SP[0].x), g = TP[0].y >= SP[0].y ? 1 : -1;
+  var S0 = minOf(SP.map(function (p) { return g * p.y; })), T1 = maxOf(TP.map(function (p) { return g * p.y; }));
+  var r = Math.max(0, Math.min(CONFIG.corner, (T1 - S0) / 2, minOf(all.map(function (p) { return Math.abs(lx - p.x); })))), ys = [];
+  SP.forEach(function (A, i) {
+    var d = 'M' + A.x + ',' + A.y + ' H' + (lx - dx * r) + (r ? ' Q' + pt(lx, A.y) + ' ' + pt(lx, A.y + g * r) : ""); ys.push(A.y + g * r);
+    h += pth(d, cv, gs.filter(function (q) { return q.a === srcs[i]; }), {br: 1, dash: DOT});
+  });
+  var tail = "";
+  TP.forEach(function (B, i) {
+    var d = 'M' + lx + ',' + (B.y - g * r) + (r ? ' Q' + pt(lx, B.y) + ' ' + pt(lx - dx * r, B.y) : "") + ' H' + B.x; ys.push(B.y - g * r);
+    tail += pth(d, cv, gs.filter(function (q) { return q.b === tgts[i]; }), {br: 1, dash: DOT});
+  });
+  var y0 = g > 0 ? minOf(ys) : maxOf(ys), y1 = g > 0 ? maxOf(ys) : minOf(ys);
+  return h + pth('M' + pt(lx, y0) + ' V' + y1, cv, gs, {dash: DOT}) + tail;
+}
+function n2(v) { return Math.round(v * 100) / 100; }
+function pt2(x, y) { return n2(x) + "," + n2(y); }
+// bezier split at t: returns [left, right] control-point lists
+function splitBez(P, t) {
+  function m(a, b) { return {x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t}; }
+  var a = m(P[0], P[1]), b = m(P[1], P[2]), c = m(P[2], P[3]), d = m(a, b), e = m(b, c), f = m(d, e);
+  return [[P[0], a, d, f], [f, e, c, P[3]]];
+}
+// solid bundle: ONE trunk (the natural smooth bezier of the bundle) with branches tapping it at successive points along the curve.
+// Sources merge in, in the order of their position, targets peel off, in the order of theirs; each branch is tangent-continuous with the trunk at its tap point.
+// Works in "flow coordinates" s = g * y (g = +1 flowing down, -1 up).
+function tapBundle(gs, cv, inPane) {
+  var h = "", srcs = uniq(gs.map(function (q) { return q.a; })), tgts = uniq(gs.map(function (q) { return q.b; }));
+  var SA = {}, TB = {};
+  srcs.forEach(function (f) { SA[f] = ancOut(f, null, inPane); });
+  tgts.forEach(function (f) { TB[f] = ancIn(f, null, inPane); });
+  var sa = SA[srcs[0]].s, sb = TB[tgts[0]].s, g = TB[gs[0].b].y >= SA[gs[0].a].y ? 1 : -1;
+  srcs.sort(function (p, q) { return g * SA[p].y - g * SA[q].y; });
+  tgts.sort(function (p, q) { return g * TB[p].y - g * TB[q].y; });
+  var sA = srcs.map(function (f) { return g * SA[f].y; }), sB = tgts.map(function (f) { return g * TB[f].y; });
+  var S1 = sA[sA.length - 1], T0 = sB[0];
+  // lead: how far past its own row a source merges (and short of its row a target peels off); small enough that every pair still gets a trunk piece between its two taps
+  var mg = minOf(gs.map(function (q) { return g * TB[q.b].y - g * SA[q.a].y; }));
+  var m = Math.max(1, Math.min(CONFIG.tapLead, mg / 2 - 0.5));
+  var Y0 = sA[0] + m, Y3 = sB[sB.length - 1] - m;
+  // y-handles: the bend of the trunk lies between the last merge and the first peel
+  var yap = Math.max((S1 + T0) / 2, S1 + m), c = span((8 * yap - Y0 - Y3) / 6, Y0, Y3);
+  // the trunk starts / ends a clear pad beyond the end of the fixed-length stubs of its own cards
+  var STUB = CONFIG.stub, PAD = 10, X0, X1, x1, x2, ax = srcs.map(function (f) { return SA[f].x * sa; }), bx = tgts.map(function (f) { return TB[f].x * sb; });
+  if (inPane) {   // the natural in-pane curve, bulging to the pane's outer side
+    X0 = X1 = sa * Math.max(paneLaneX(gs[0].a, sa) * sa, maxOf(ax) + STUB + PAD, maxOf(bx) + STUB + PAD); var bg = bulge(Y3 - Y0); x1 = x2 = X0 + sa * bg;
+  } else {        // the natural cross-pane S, from just beyond the source stubs to just beyond the target stubs
+    var G = ctx.gut, pad = Math.max(2, Math.min(16, (G.r - G.l) / 2 - 6));
+    X0 = sa * Math.max((sa > 0 ? G.l + pad : -(G.r - pad)), maxOf(ax) + STUB + PAD); X1 = sb * Math.max((sb > 0 ? G.l + pad : -(G.r - pad)), maxOf(bx) + STUB + PAD);
+    ctx.needGap = Math.max(ctx.needGap || 0, 2 * (STUB + PAD) + 30);
+    var k = Math.max(30, Math.min(120, Math.abs(X1 - X0) * 0.45)); x1 = span(X0 + sa * k, X0, X1); x2 = span(X1 + sb * k, X0, X1);
+  }
+  var BZ = [{x: X0, y: g * Y0}, {x: x1, y: g * c}, {x: x2, y: g * c}, {x: X1, y: g * Y3}];
+  function at(t) { var u = 1 - t; return {x: u * u * u * BZ[0].x + 3 * u * u * t * BZ[1].x + 3 * u * t * t * BZ[2].x + t * t * t * BZ[3].x, y: u * u * u * BZ[0].y + 3 * u * u * t * BZ[1].y + 3 * u * t * t * BZ[2].y + t * t * t * BZ[3].y}; }
+  function dir(t) {
+    var u = 1 - t, dx = 3 * u * u * (BZ[1].x - BZ[0].x) + 6 * u * t * (BZ[2].x - BZ[1].x) + 3 * t * t * (BZ[3].x - BZ[2].x);
+    var dy = 3 * u * u * (BZ[1].y - BZ[0].y) + 6 * u * t * (BZ[2].y - BZ[1].y) + 3 * t * t * (BZ[3].y - BZ[2].y), l = Math.hypot(dx, dy) || 1;
+    return {x: dx / l, y: dy / l};
+  }
+  function tOf(s) {   // y is monotone along the trunk: bisection
+    if (s <= Y0) return 0; if (s >= Y3) return 1;
+    var lo = 0, hi = 1; for (var i = 0; i < 40; i++) { var mdl = (lo + hi) / 2; if (g * at(mdl).y < s) lo = mdl; else hi = mdl; }
+    return (lo + hi) / 2;
+  }
+  var tS = sA.map(function (s) { return tOf(s + m); }), tT = sB.map(function (s) { return tOf(s - m); }), br = {br: 1};
+  // a branch: fixed-length horizontal stub out of the card, then one cubic that is monotone in x and in y and ends tangent to the trunk
+  // (flow direction gg, side sd; u = trunk direction at the tap, pointing the way the branch is drawn)
+  function branch(A, sd, Q, u, gg) {
+    var A2 = {x: A.x + sd * STUB, y: A.y}, dx = Math.max(0, (Q.x - A2.x) * sd), dy = Math.max(0.5, gg * (Q.y - A.y)), ux = Math.max(0, u.x * sd), uy = Math.max(0, gg * u.y);
+    var h1 = 0.45 * dx, h2 = Math.min(0.5 * Math.hypot(dx, dy), uy > 0.02 ? dy / uy : 1e9, ux > 0.02 ? (dx - h1) / ux : 1e9);
+    return {A2: A2, P1: {x: A2.x + sd * h1, y: A.y}, P2: {x: Q.x - sd * ux * h2, y: Q.y - gg * uy * h2}};
+  }
+  srcs.forEach(function (f, i) {
+    var A = SA[f], Q = at(tS[i]), br_ = branch(A, sa, Q, dir(tS[i]), g);
+    h += pth('M' + pt2(A.x, A.y) + ' H' + n2(br_.A2.x) + ' C' + pt2(br_.P1.x, br_.P1.y) + ' ' + pt2(br_.P2.x, br_.P2.y) + ' ' + pt2(Q.x, Q.y), cv, gs.filter(function (q) { return q.a === f; }), br);
+  });
+  var tail = "";
+  tgts.forEach(function (f, j) {
+    var B = TB[f], P = at(tT[j]), u = dir(tT[j]), br_ = branch(B, sb, P, {x: -u.x, y: -u.y}, -g);   // drawn backwards from the card, then reversed
+    tail += pth('M' + pt2(P.x, P.y) + ' C' + pt2(br_.P2.x, br_.P2.y) + ' ' + pt2(br_.P1.x, br_.P1.y) + ' ' + pt2(br_.A2.x, br_.A2.y) + ' H' + n2(B.x), cv, gs.filter(function (q) { return q.b === f; }), br);
+  });
+  // trunk pieces between consecutive taps; a piece carries the groups merged in so far and not yet peeled off
+  var cuts = uniq(tS.concat(tT).map(function (t) { return Math.round(t * 1e6) / 1e6; }).sort(function (p, q) { return p - q; })), pieces = [];
+  for (var i = 0; i + 1 < cuts.length; i++) {
+    var a = cuts[i], b = cuts[i + 1], md = (a + b) / 2;
+    var on = gs.filter(function (q) { return tS[srcs.indexOf(q.a)] <= md && tT[tgts.indexOf(q.b)] >= md; });
+    if (on.length) pieces.push({a: a, b: b, gs: on});
+  }
+  var big = 0, len = function (p) { return Math.hypot(at(p.b).x - at(p.a).x, at(p.b).y - at(p.a).y); };
+  pieces.forEach(function (p, i) { if (len(p) > len(pieces[big])) big = i; });
+  pieces.forEach(function (p, i) {
+    var P = splitBez(BZ, p.a)[1]; P = splitBez(P, (p.b - p.a) / (1 - p.a))[0];
+    h += pth('M' + pt2(P[0].x, P[0].y) + ' C' + pt2(P[1].x, P[1].y) + ' ' + pt2(P[2].x, P[2].y) + ' ' + pt2(P[3].x, P[3].y), cv, p.gs, i === big ? {} : br);
+  });
+  return h + tail;
+}
+// dotted bundle between the two panes (inside the common directory card): branches fan into a junction near each side, joined by one trunk
+function fanBundle(gs, cv, inPane, dotted) {
+  var STUB = CONFIG.stub, FAN = CONFIG.fan, h = "", dash = dotted ? DOT : null;
+  var srcs = uniq(gs.map(function (g) { return g.a; })), tgts = uniq(gs.map(function (g) { return g.b; }));
+  var SA = {}, TB = {};
+  srcs.forEach(function (f) { SA[f] = ancOut(f, null, inPane); });
+  tgts.forEach(function (f) { TB[f] = ancIn(f, null, inPane); });
+  var Apts = srcs.map(function (f) { return SA[f]; }), Bpts = tgts.map(function (f) { return TB[f]; });
+  var sa = Apts[0].s, sb = Bpts[0].s, GAP = STUB + 28, ST = STUB, room = null;
+  // dotted bundles stay inside the common directory card
+  if (dotted) {
+    var lim = dirBoxEdge(gs[0].a, gs[0].b, sa);
+    if (lim != null) {
+      var ex = Apts.concat(Bpts).map(function (p) { return Math.abs(lim - p.x); });
+      room = Math.max(8, minOf(ex) - 5); ST = room * 0.2; GAP = room * 0.5;
+    }
+  }
+  function bk2(dy) { return room != null ? room * 0.3 : (inPane ? bulge(dy) / 2 : 14); }
+  function edgeX(pts, sd) { var xs = pts.map(function (p) { return p.x; }); return sd > 0 ? maxOf(xs) : minOf(xs); }
+  function meanY(pts) { return pts.reduce(function (t, p) { return t + p.y; }, 0) / pts.length; }
+  // junctions (one file on a side: the end of its horizontal run)
+  var Js = srcs.length > 1 ? {x: edgeX(Apts, sa) + sa * GAP, y: 0} : {x: Apts[0].x + sa * (room != null ? GAP : STUB), y: Apts[0].y};
+  var Jt = tgts.length > 1 ? {x: edgeX(Bpts, sb) + sb * GAP, y: 0} : {x: Bpts[0].x + sb * (room != null ? GAP : STUB), y: Bpts[0].y};
+  // cross-pane: each junction stays in its own half of the gap between the panes, so the trunk never runs backwards
+  if (!dotted && !inPane && ctx.gut) {
+    var M = 6, mid = ctx.gut.mid;
+    if (sa > 0) Js.x = Math.min(Js.x, mid - M); else Js.x = Math.max(Js.x, mid + M);
+    if (sb > 0) Jt.x = Math.min(Jt.x, mid - M); else Jt.x = Math.max(Jt.x, mid + M);
+  }
+  // a stub never runs past its junction
+  function stubOf(P, J, sd) { return dotted ? ST : Math.min(ST, Math.max(6, (J.x - P.x) * sd - 12)); }
+  function sp(x, a, b) { return dotted ? x : span(x, a, b); }
+  // fan junctions sit FAN beyond the file nearest the other side
+  var down = meanY(Bpts) >= meanY(Apts);
+  if (srcs.length > 1) { var ya = Apts.map(function (p) { return p.y; }); Js.y = (down ? maxOf(ya) : minOf(ya)) + (down ? FAN : -FAN); }
+  if (tgts.length > 1) { var yb = Bpts.map(function (p) { return p.y; }); Jt.y = (down ? minOf(yb) : maxOf(yb)) + (down ? -FAN : FAN); }
+  var dx = Math.abs(Jt.x - Js.x);
+  var k = room != null ? room * 0.5 : inPane ? bulge(Math.abs(Jt.y - Js.y)) : Math.max(30, Math.min(120, dx * 0.45));
+  // trunk handles follow the trunk direction; branch handles are scaled to the branch length
+  var v = {x: sa * k * 0.3, y: (Jt.y - Js.y) * 0.3}, w = {x: sb * k * 0.3, y: (Js.y - Jt.y) * 0.3};
+  // the trunk must run on in the direction the branches fan towards; when the two fans overlap vertically it would double back (a cusp at the junction), so it leaves horizontally instead
+  if ((Jt.y - Js.y) * (down ? 1 : -1) < 8) { v.y = 0; w.y = 0; }
+  function hnd(u, P1, P2) { var n = Math.hypot(u.x, u.y) || 1, L = 0.45 * Math.hypot(P2.x - P1.x, P2.y - P1.y); return {x: u.x / n * L, y: u.y / n * L}; }
+  var br = {br: 1, dash: dash};
+  srcs.forEach(function (f) {
+    var A = SA[f], A2x = A.x + sa * stubOf(A, Js, sa), op = gs.filter(function (g) { return g.a === f; });
+    if (srcs.length > 1) {
+      var q = hnd(v, {x: A2x, y: A.y}, Js);
+      h += pth('M' + pt(A.x, A.y) + ' H' + A2x + ' C' + pt(sp(A2x + sa * Math.min(bk2(Math.abs(Js.y - A.y)), 0.45 * Math.hypot(Js.x - A2x, Js.y - A.y)), A2x, Js.x), A.y) + ' ' + pt(sp(Js.x - q.x, A2x, Js.x), Js.y - q.y) + ' ' + pt(Js.x, Js.y), cv, op, br);
+    } else h += pth('M' + pt(A.x, A.y) + ' H' + Js.x, cv, op, br);
+  });
+  var tc1 = Js.x + (srcs.length > 1 ? v.x : sa * k), tc2 = Jt.x + (tgts.length > 1 ? w.x : sb * k);
+  if (!inPane) { tc1 = sp(tc1, Js.x, Jt.x); tc2 = sp(tc2, Js.x, Jt.x); }
+  h += pth('M' + pt(Js.x, Js.y) + ' C' + pt(tc1, Js.y + (srcs.length > 1 ? v.y : 0)) + ' ' + pt(tc2, Jt.y + (tgts.length > 1 ? w.y : 0)) + ' ' + pt(Jt.x, Jt.y), cv, gs, {dash: dash});
+  tgts.forEach(function (f) {
+    var B = TB[f], B2x = B.x + sb * stubOf(B, Jt, sb), op = gs.filter(function (g) { return g.b === f; });
+    if (tgts.length > 1) {
+      var q = hnd(w, {x: B2x, y: B.y}, Jt);
+      h += pth('M' + pt(Jt.x, Jt.y) + ' C' + pt(sp(Jt.x - q.x, Jt.x, B2x), Jt.y - q.y) + ' ' + pt(sp(B2x + sb * Math.min(bk2(Math.abs(B.y - Jt.y)), 0.45 * Math.hypot(Jt.x - B2x, Jt.y - B.y)), Jt.x, B2x), B.y) + ' ' + pt(B2x, B.y) + ' H' + B.x, cv, op, br);
+    } else h += pth('M' + pt(Jt.x, Jt.y) + ' H' + B.x, cv, op, br);
+  });
+  return h;
+}
+
+// ---- selection: every visible edge at function level; edges touching the selection are drawn last (on top)
+function selectionHtml(act) {
+  var s = state.sel, rest = [], top = [];
+  visibleEdges().forEach(function (e) {
+    var isAct = act.edges.indexOf(e) >= 0;
+    if (!isAct && s.i == null) return;   // a file is selected: other arrows hidden
+    var inPane = side(e.a) === side(e.b), A = ancOut(e.a, e.ai, inPane), B = ancIn(e.b, e.bi, inPane), rt = route(e.a, e.b, A, B);
+    var op = isAct ? 1 : 0.05;
+    if (!isAct && (!matches(MAP[e.a]) || !matches(MAP[e.b]))) op = Math.min(op, 0.08);
+    var cv = isAct ? (e.a === s.path ? "var(--out)" : "var(--in)") : "var(--edge)";
+    (isAct ? top : rest).push(pth(rt.d, cv, op, {dash: e.weak ? WEAK : (rt.same ? DOT : null)}));
+  });
+  return rest.concat(top);
+}
+
+// the gap between the panes: l = right-most card edge of the left pane, r = left-most card edge of the right pane (null when a pane is empty)
+function gutter() {
+  var br = board_().getBoundingClientRect(), l = -Infinity, r = Infinity;
+  [].forEach.call(document.querySelectorAll("#colL .file"), function (c) { l = Math.max(l, c.getBoundingClientRect().right - br.left); });
+  [].forEach.call(document.querySelectorAll("#colR .file"), function (c) { r = Math.min(r, c.getBoundingClientRect().left - br.left); });
+  return l < r && isFinite(l) && isFinite(r) ? {l: l, r: r, mid: (l + r) / 2} : null;
+}
+function board_() { return $("board"); }
+// x of a lane just outside every card of the pane, on side sd (-1 left, +1 right)
+function paneLaneX(path, sd) {
+  var pane = side(path) === "L" ? "#colL" : "#colR", x = sd < 0 ? Infinity : -Infinity;
+  [].forEach.call(document.querySelectorAll(pane + " .file"), function (c) {
+    var r = c.getBoundingClientRect(); x = sd < 0 ? Math.min(x, r.left - ctx.br.left) : Math.max(x, r.right - ctx.br.left);
+  });
+  return x + sd * 18;
+}
+function drawEdges() {
+  var board = $("board"), svg = $("edges"), W = board.scrollWidth, H = board.scrollHeight;
+  ctx = {br: board.getBoundingClientRect(), glanes: {}, gut: gutter()};
+  svg.setAttribute("width", W); svg.setAttribute("height", H); svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+  svg.innerHTML = (state.sel ? selectionHtml(activeSet()) : overviewHtml()).join("");
+  decorate(svg);
+  var hd = $("colhd"); hd.style.gridTemplateColumns = getComputedStyle(board).gridTemplateColumns; hd.style.width = board.offsetWidth + "px";
+  fitMargins(board, svg);
+}
+
+/* ============================================================================
+   8. DECORATE — mid arrows and endpoint triangles
+   Mid arrows sit at 1/3 and 2/3 of the non-horizontal part of a trunk (not on branches);
+   where a line meets a card border a triangle in the line direction is drawn on the border
+   (hollow = leaves the card, filled = enters it).
+   ========================================================================== */
+function decorate(svg) {
+  var br = ctx.br, out = [];
+  var rects = [].map.call(document.querySelectorAll(".file"), function (c) {
+    var r = c.getBoundingClientRect();
+    return {l: r.left - br.left, r: r.right - br.left, t: r.top - br.top, b: r.bottom - br.top};
+  });
+  function onCard(p) { return rects.some(function (r) { return (Math.abs(p.x - r.l) < 1.5 || Math.abs(p.x - r.r) < 1.5) && p.y >= r.t - 1 && p.y <= r.b + 1; }); }
+  function tri(p, a, cv, op, sz, mode, mk) {
+    var hx = mode ? sz * 0.74 : sz;
+    var style = mode === "out" ? 'fill="var(--bg)" stroke="' + cv + '" stroke-width="1.1" stroke-linejoin="round"'
+      : mode === "in" ? 'fill="' + cv + '" stroke="' + cv + '" stroke-width="1.1" stroke-linejoin="round"' : 'fill="' + cv + '"';
+    return '<path d="M' + (-hx) + ',' + (-sz * 0.85) + ' L' + hx + ',0 L' + (-hx) + ',' + (sz * 0.85) + ' z" ' + style + (mk ? ' data-mk="' + mk + '"' : '') + (op < 1 ? ' opacity="' + op + '"' : '') + ' transform="translate(' + p.x + ',' + p.y + ') rotate(' + a + ')"/>';
+  }
+  function ang(el, l1, l2) { var p = el.getPointAtLength(l1), q = el.getPointAtLength(l2); return Math.atan2(q.y - p.y, q.x - p.x) * 180 / Math.PI; }
+  [].forEach.call(svg.querySelectorAll("path[stroke]"), function (el) {
+    var cv = el.getAttribute("stroke"), op = +(el.getAttribute("opacity") || 1), mk = el.getAttribute("data-mk"), L = el.getTotalLength();
+    if (!el.hasAttribute("data-br") && L > 20) {
+      var N = Math.max(8, Math.ceil(L / 4)), t0 = null, t1 = null;
+      for (var k = 0; k < N; k++) {
+        var la = L * k / N, lb = L * (k + 1) / N, p = el.getPointAtLength(la), q = el.getPointAtLength(lb);
+        if (Math.abs(q.y - p.y) > 0.35 * Math.abs(q.x - p.x)) { if (t0 == null) t0 = la; t1 = lb; }
+      }
+      if (t0 != null && t1 - t0 > 30) [1 / 3, 2 / 3].forEach(function (t) { var l = t0 + (t1 - t0) * t; out.push(tri(el.getPointAtLength(l), ang(el, l, Math.min(L, l + 1)), cv, op, 4, null, mk)); });
+    }
+    var s0 = el.getPointAtLength(0), s1 = el.getPointAtLength(L);
+    if (onCard(s0)) out.push(tri(s0, ang(el, 0, Math.min(L, 2)), cv, op, 4.5, "out", mk));
+    if (onCard(s1)) out.push(tri(s1, ang(el, Math.max(0, L - 2), L), cv, op, 4.5, "in", mk));
+  });
+  svg.insertAdjacentHTML("beforeend", out.join(""));
+}
+
+/* ============================================================================
+   9. FIT — equal side / middle margins, pushed out by the outermost line; redraws only when they change
+   ========================================================================== */
+var fitting = 0;
+function fitMargins(board, svg) {
+  if (fitting >= 4) return;
+  var bb = svg.getBBox(), W = board.clientWidth, cs = getComputedStyle(board), c = CONFIG;
+  var ml = parseFloat(cs.marginLeft), mr = parseFloat(cs.marginRight);
+  var gw = ctx.gut ? ctx.gut.r - ctx.gut.l : 0, wide = ctx.needGap ? Math.ceil(ctx.needGap - gw + ml) : 0;   // gap between the panes wide enough for the stubs and the trunk
+    var M = Math.max(c.pad, c.midMin, wide, Math.ceil(-bb.x + c.pad), Math.ceil(bb.x + bb.width - W + c.pad));
+  var cols = "max-content " + (M + c.pagePad) + "px max-content";
+  if (Math.abs(M - ml) < 2 && Math.abs(M - mr) < 2 && board.style.gridTemplateColumns === cols) return;
+  [board, $("colhd")].forEach(function (el) { el.style.marginLeft = M + "px"; el.style.marginRight = M + "px"; el.style.gridTemplateColumns = cols; });
+  fitting++; drawEdges(); fitting--;
+}
+
+/* ============================================================================
+   10. EVENTS / INIT
+   ========================================================================== */
+document.addEventListener("click", function (ev) {
+  var t = ev.target; if (!(t instanceof Element)) return;
+  var b = t.closest("[data-f]");
+  if (b) { setFilter(b.getAttribute("data-f")); return; }
+  if (t.closest("[data-clear]")) { setSel(null); return; }
+  if ((b = t.closest("[data-pf]"))) { var pi = b.getAttribute("data-pi"); setSel(b.getAttribute("data-pf"), pi == null ? null : +pi); return; }
+  if ((b = t.closest(".fn .nm"))) {
+    var row = b.closest("[data-fn]"), p = row.getAttribute("data-fn"), i = +row.getAttribute("data-i");
+    setSel(p, state.sel && state.sel.path === p && state.sel.i === i ? null : i); return;
+  }
+  if ((b = t.closest(".file[data-path]"))) {
+    var p2 = b.getAttribute("data-path");
+    setSel(state.sel && state.sel.path === p2 && state.sel.i == null ? null : p2, null); return;
+  }
+});
+var resizeTimer;
+window.addEventListener("resize", function () { clearTimeout(resizeTimer); resizeTimer = setTimeout(drawEdges, 60); });
+function redraw() { requestAnimationFrame(drawEdges); }
+if (window.ResizeObserver) new ResizeObserver(redraw).observe($("board"));
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(redraw);
+renderLegend(); paneHeaders(); render();
+</script>
+</body>
+</html>
