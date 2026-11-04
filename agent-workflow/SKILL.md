@@ -100,11 +100,11 @@ CA では、pstack のスキルファイルは `~/.cursor/plugins/cache/` 配下
 ## 実装
 
 - TypeScript（`.ts`、`.tsx`）を書く作業では、`poteto-mode` を使うかどうかに関係なく `typescript-best-practices` を必ず読む。
-- 引数をoptional（`?:`）にしていいのは、省略すると「無効」か「通常動作」になると決まっているフラグだけ。それ以外の場合や、指定忘れが事故になる場合は、`T | undefined` か `T | null` でrequiredにする。DB schema、Zod、外部ライブラリの型は除く。
-- アプリ内で定義した値、関数、型を、アプリ内の別箇所から再exportしない。
+- 引数・パラメータを optional にするのは、既定値が falsy で、かつ falsy が安全側である場合のみ。どちらかを満たせない場合は、`T | undefined` や `T | null` で required にする。DB schema、Zod、外部ライブラリの型は除く。
+- アプリ内で定義した値・関数・型を別箇所で再exportしない。
 - console.logやコメントアウトは勝手に消さない。
 - 変更によってmigrationファイルに型エラーが出ても、過去のmigrationは修正せず `// @ts-expect-error old` の追加のみする。
-- migration未実行を前提としたfallbackは不要。
+- 保存済みのデータの欠け・古い形・重複・ない参照などをコードで毎回補う関数や分岐（migration 未実行前提の fallback を含む）は作らず、migration の作成や制約（NOT NULL、既定値、一意、外部キー）で直して型も合わせる。null が「未回答」など意味を持つ場合は埋めない。データベースに入る前の値（外部 API 応答、フォーム入力など）は、受け取る入口の 1 か所で整える。
 - 人の操作で通常起きない極端なケースをカバーするための実装は、事故につながる場合や特別な理由がある場合を除き原則不要。
 - 同じ対象を指す値は、差の意味が説明できる場合を除き2ヶ所以上に持たない。
 
