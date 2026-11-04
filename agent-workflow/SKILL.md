@@ -59,7 +59,8 @@ description: git・ブランチ・デプロイ、テスト、UI、TypeScript/Rea
 ## ブランチ
 - main は本番デプロイブランチ。進めるときは develop を --ff-only で merge する。
 - develop がないリポジトリでは main から機能ブランチを切る。
-- 機能ブランチは develop に通常の merge で取り込む（squash や rebase はしない）。PR は作らない。
+- 機能ブランチは develop に通常の merge で取り込む。PR は作らない。
+- develop に入れる前に、方針の行き来や前のコミットを直すだけのコミットが混じっていたら、Grok Bot はコミットを rebase でまとめることを seno に提案する。承認後に CA がまとめ、前後で tree が同じことを確かめて `--force-with-lease` で push する。develop と main に入ったコミットは書き換えない。
 - develop と機能ブランチへの push、開発環境へのデプロイは確認なしでよい。
 
 ## pstack の使い方
