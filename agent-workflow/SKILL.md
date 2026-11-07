@@ -27,6 +27,7 @@ description: git・ブランチ・デプロイ、テスト、UI、TypeScript/Rea
 - 決まった方針の中の設計や実装の判断、4 個以上のファイルを読むこと、コードを書くこと、実行することは、CA（クラウドエージェント）、worker、サブエージェントのいずれかに任せる。作業者には、作業前に `https://raw.githubusercontent.com/seno-dev/agent-skills/main/` の `agent-workflow/SKILL.md` （`improve-ui` など別スキルを使う場合、同じ場所の `<skill名>/SKILL.md` も） を読ませ、作業者が出すサブエージェントにも同じ指示を渡すよう伝える。
 - 指示文には note の URL と、note にない今回の文脈（依頼のきっかけ、直前のやり取りや前の作業の結果）を書き、note の中身は写さない。作業者は作業前に note を notion-fetch で読み、読めなければ止めて報告する。従うのは「前提」と「決定」と、そこからリンクされたリポジトリの仕様書だけで、「未決定の案」と「不採用」は実装しない。note、指示文、仕様書、コードが食い違えば、自分で決めずに報告する。
 - 調査では、CA にはコード上の事実だけを出させる（状態、経路、変更箇所と量、テストの結果）。事実には パス:行 かコマンド、仕様には URL を付けさせ、確かめられないことは未確認と書かせる。レビューを頼むときは、指摘ごとに場所、問題、影響、確定か推測かだけを出させ、修正案は書かせない。修正案が付いてきても、それを土台にせず、Grok Bot が事実から案を作る。
+- コード探索やブランチ作業の前に `git fetch` で対象ブランチを最新にし、checkout に無い機能ブランチだけの変更は `git show <sha>:<path>` や `git grep <sha>` で読む。
 
 ## Project と Note
 - 新しいプロジェクトは、Templates の「Project Template」DB を複製して Projects 直下へ移し、名前をプロジェクト名に変えて作る。
@@ -110,6 +111,8 @@ interrogate reviewers: grok-4.7-high, claude-opus-5-5-medium
 ### 読み込み方
 
 CA では、pstack のスキルファイルは `~/.cursor/plugins/cache/` 配下にあるが、一覧に出るのは `setup-pstack` だけで、`poteto-mode` などは出ない。使うときは `ls ~/.cursor/plugins/cache/*/*/*/skills/poteto-mode/SKILL.md` でパスを探して Read し、必要なスキルも同じ `skills/` 配下から Read する。
+
+`typescript-best-practices` も `poteto-mode` と同じくこのリポジトリではなくプラグインキャッシュ（`~/.cursor/plugins/cache/`）にあるので、`ls ~/.cursor/plugins/cache/*/*/*/skills/typescript-best-practices/SKILL.md` でパスを探して Read する。
 
 ## 実装
 
